@@ -5,14 +5,26 @@ import heroImage from "@/assets/hero-vape.jpg";
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero">
-      {/* Background Image with Overlay */}
+      {/* Video Background with Overlay */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src={heroImage} 
-          alt="Premium vaping experience"
-          className="w-full h-full object-cover opacity-30"
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-background/80 via-background/60 to-primary/20" />
+        {/* Video element ready for when you provide the video */}
+        <video 
+          className="w-full h-full object-cover opacity-40"
+          autoPlay 
+          muted 
+          loop 
+          playsInline
+        >
+          {/* Add your video source here when available */}
+          {/* <source src="/path-to-your-video.mp4" type="video/mp4" /> */}
+          {/* Fallback image while no video */}
+          <img 
+            src={heroImage} 
+            alt="Premium vaping experience"
+            className="w-full h-full object-cover"
+          />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-br from-background/85 via-background/70 to-primary/30" />
       </div>
 
       {/* Animated background elements */}
