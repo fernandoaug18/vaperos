@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Facebook, Instagram, Twitter, Mail } from "lucide-react";
+import { Instagram } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -16,13 +15,7 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <Button variant="outline" size="icon" className="rounded-full">
-                <Facebook className="w-4 h-4" />
-              </Button>
-              <Button variant="outline" size="icon" className="rounded-full">
                 <Instagram className="w-4 h-4" />
-              </Button>
-              <Button variant="outline" size="icon" className="rounded-full">
-                <Twitter className="w-4 h-4" />
               </Button>
             </div>
           </div>
