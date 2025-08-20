@@ -7,23 +7,23 @@ const HeroSection = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero">
       {/* Video Background with Overlay */}
       <div className="absolute inset-0 z-0">
-        {/* Video element ready for when you provide the video */}
         <video 
-          className="w-full h-full object-cover opacity-40"
+          className="w-full h-full object-cover opacity-50"
           autoPlay 
           muted 
           loop 
           playsInline
+          poster={heroImage}
         >
-          {/* Add your video source here when available */}
-          {/* <source src="/path-to-your-video.mp4" type="video/mp4" /> */}
-          {/* Fallback image while no video */}
-          <img 
-            src={heroImage} 
-            alt="Premium vaping experience"
-            className="w-full h-full object-cover"
-          />
+          <source src="/videos/hero-video.mp4" type="video/mp4" />
+          {/* Fallback image if video doesn't load */}
         </video>
+        <img 
+          src={heroImage} 
+          alt="Premium vaping experience"
+          className="w-full h-full object-cover opacity-30"
+          style={{ display: 'none' }}
+        />
         <div className="absolute inset-0 bg-gradient-to-br from-background/85 via-background/70 to-primary/30" />
       </div>
 
