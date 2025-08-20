@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap, Star } from "lucide-react";
 import heroImage from "@/assets/hero-vape.jpg";
+import vaperosLogo from "@/assets/vaperos-logo.png";
 
 const HeroSection = () => {
   return (
@@ -37,9 +38,13 @@ const HeroSection = () => {
       <div className="relative z-10 container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto">
           {/* Main Heading */}
-          <h1 className="text-7xl md:text-9xl font-black mb-6 leading-none tracking-tighter">
-            <span className="text-gradient">VAPEROS</span>
-          </h1>
+          <div className="flex items-center justify-center mb-6">
+            <img 
+              src={vaperosLogo} 
+              alt="VAPEROS"
+              className="max-w-lg w-full h-auto"
+            />
+          </div>
 
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
