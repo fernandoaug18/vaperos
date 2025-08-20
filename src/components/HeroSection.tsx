@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap, Star } from "lucide-react";
 import heroImage from "@/assets/hero-vape.jpg";
-import vaperosLogo from "@/assets/vaperos-logo-transparent.png";
+import vaperosLogo from "@/assets/vaperos-new-logo.png";
 
 const HeroSection = () => {
   return (
@@ -61,22 +61,6 @@ const HeroSection = () => {
               COMPRA YA
               <ArrowRight className="ml-3 w-6 h-6" />
             </Button>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-8 max-w-md mx-auto">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary">500+</div>
-              <div className="text-sm text-muted-foreground">Productos</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-accent">50k+</div>
-              <div className="text-sm text-muted-foreground">Vaperos</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary-glow">24/7</div>
-              <div className="text-sm text-muted-foreground">Soporte</div>
-            </div>
           </div>
         </div>
       </div>

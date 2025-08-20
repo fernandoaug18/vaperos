@@ -50,12 +50,8 @@ const HQDProductsSection = () => {
     <section className="py-20 px-4 bg-gradient-subtle">
       <div className="container mx-auto">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-6">
-            <Star className="w-5 h-5 text-primary fill-primary" />
-            <span className="text-primary font-semibold">Productos HQD Premium</span>
-          </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Solo <span className="text-gradient">$15.000</span> cada uno
+            Solo <span className="text-white">$15.000</span> cada uno
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Los mejores sabores HQD disponibles. 9000 puffs de pura calidad y sabor intenso.
@@ -120,7 +116,7 @@ const HQDProductsSection = () => {
           </div>
           <div className="mt-8">
             <h3 className="text-2xl font-bold mb-4">
-              Disponibles en Nuestros <span className="text-gradient">Puntos de Venta</span>
+              Disponibles en Nuestros <span className="text-sky-400">Puntos de Venta</span>
             </h3>
             <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
               Encuentra todos estos sabores HQD en nuestros dispensadores automáticos ubicados estratégicamente en la ciudad.

@@ -5,7 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Shield } from "lucide-react";
-import ageLogo from "@/assets/18-plus-logo.png";
+import ageLogo from "@/assets/18-plus-logo-transparent.png";
 
 const FAQSection = () => {
   const faqs = [
@@ -37,7 +37,7 @@ const FAQSection = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Preguntas <span className="text-gradient">Frecuentes</span>
+              <span className="text-sky-400">Preguntas Frecuentes</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Todo lo que necesitas saber sobre nuestros productos HQD
