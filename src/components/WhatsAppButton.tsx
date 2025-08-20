@@ -1,8 +1,7 @@
-import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const WhatsAppButton = () => {
-  const phoneNumber = "573001234567"; // Replace with your actual WhatsApp number
+  const phoneNumber = "56945856240"; // WhatsApp number
   const message = "Hola! Me interesa conocer más sobre los productos HQD";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
@@ -11,7 +10,7 @@ const WhatsAppButton = () => {
       <Button
         asChild
         size="lg"
-        className="bg-green-500 hover:bg-green-600 text-white rounded-full w-16 h-16 shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse hover:animate-none"
+        className="bg-green-500 hover:bg-green-600 text-white rounded-full w-16 h-16 shadow-lg hover:shadow-xl transition-all duration-300"
       >
         <a
           href={whatsappUrl}
@@ -19,7 +18,11 @@ const WhatsAppButton = () => {
           rel="noopener noreferrer"
           aria-label="Contactar por WhatsApp"
         >
-          <MessageCircle className="w-8 h-8" />
+          <img 
+            src="/src/assets/whatsapp-logo.svg" 
+            alt="WhatsApp" 
+            className="w-8 h-8 filter brightness-0 invert"
+          />
         </a>
       </Button>
     </div>
