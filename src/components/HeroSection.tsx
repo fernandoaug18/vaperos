@@ -38,13 +38,9 @@ const HeroSection = () => {
       <div className="relative z-10 container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto">
           {/* Main Heading */}
-          <div className="flex items-center justify-center mb-6">
-            <img 
-              src={vaperosLogo} 
-              alt="VAPEROS"
-              className="max-w-lg w-full h-auto"
-            />
-          </div>
+          <h1 className="text-7xl md:text-9xl font-black mb-6 leading-none tracking-tighter">
+            <span className="text-white">VAPEROS</span>
+          </h1>
 
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
@@ -56,7 +52,7 @@ const HeroSection = () => {
           <div className="flex justify-center mb-16">
             <Button 
               size="lg" 
-              className="bg-gradient-primary hover:shadow-glow transition-all duration-300 text-xl font-bold px-12 py-6 rounded-2xl"
+              className="bg-sky-400 hover:bg-sky-300 text-white hover:text-gray-900 transition-all duration-300 text-xl font-bold px-12 py-6 rounded-2xl"
             >
               COMPRA YA
               <ArrowRight className="ml-3 w-6 h-6" />

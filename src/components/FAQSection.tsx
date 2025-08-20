@@ -68,11 +68,6 @@ const FAQSection = () => {
           <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-8 text-center">
             <div className="flex items-center justify-center gap-3 mb-4">
               <Shield className="w-8 h-8 text-primary" />
-              <img 
-                src={ageLogo} 
-                alt="Solo para mayores de 18 años"
-                className="h-12"
-              />
             </div>
             <h3 className="text-2xl font-bold mb-3">Productos para Mayores de 18 Años</h3>
             <p className="text-muted-foreground max-w-2xl mx-auto">

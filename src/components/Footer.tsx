@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Brand */}
           <div>
-            <h3 className="text-2xl font-bold text-gradient mb-4">Vaperos</h3>
+            <h3 className="text-2xl font-bold text-white mb-4">Vaperos</h3>
             <p className="text-muted-foreground mb-6">
               Tu destino premium para la mejor experiencia vaper. 
               Calidad, innovación y pasión en cada producto.
@@ -69,7 +69,7 @@ const Footer = () => {
 
         {/* Bottom */}
         <div className="border-t border-border/50 pt-8 text-center text-muted-foreground">
-          <p>&copy; 2024 Vaperos. Todos los derechos reservados.</p>
+          <p>&copy; 2024 <span className="text-white">Vaperos</span>. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>
