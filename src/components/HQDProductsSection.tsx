@@ -95,7 +95,7 @@ const HQDProductsSection = () => {
                       </div>
                       
                       <Button 
-                        className="w-full bg-gradient-primary hover:opacity-90 transition-opacity duration-300"
+                        className="w-full bg-sky-400 hover:bg-sky-300 text-white hover:text-gray-900 transition-all duration-300"
                         size="sm"
                       >
                         <ShoppingCart className="w-4 h-4 mr-2" />
