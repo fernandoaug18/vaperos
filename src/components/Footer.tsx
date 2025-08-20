@@ -14,8 +14,15 @@ const Footer = () => {
               Calidad, innovación y pasión en cada producto.
             </p>
             <div className="flex space-x-4">
-              <Button variant="outline" size="icon" className="rounded-full">
-                <Instagram className="w-4 h-4" />
+              <Button variant="outline" size="icon" className="rounded-full" asChild>
+                <a 
+                  href="https://www.instagram.com/hqd.cl" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="Síguenos en Instagram"
+                >
+                  <Instagram className="w-4 h-4" />
+                </a>
               </Button>
             </div>
           </div>
