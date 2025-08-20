@@ -43,7 +43,6 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Soporte</h4>
             <ul className="space-y-2 text-muted-foreground">
               <li><a href="#" className="hover:text-primary transition-colors">Centro de Ayuda</a></li>
-              <li><a href="/faq" className="hover:text-primary transition-colors">Preguntas Frecuentes</a></li>
               <li><a href="#" className="hover:text-primary transition-colors">Garantías</a></li>
               <li><a href="#" className="hover:text-primary transition-colors">Envíos</a></li>
               <li><a href="#" className="hover:text-primary transition-colors">Contacto</a></li>

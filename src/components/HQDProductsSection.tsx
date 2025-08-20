@@ -90,7 +90,7 @@ const HQDProductsSection = () => {
                         <span>{product.nicotine} nicotina</span>
                       </div>
                       
-                      <div className="text-2xl font-bold text-primary mb-4">
+                      <div className="text-2xl font-bold text-white mb-4">
                         ${product.price}
                       </div>
                       
@@ -125,9 +125,6 @@ const HQDProductsSection = () => {
             <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
               Encuentra todos estos sabores HQD en nuestros dispensadores automáticos ubicados estratégicamente en la ciudad.
             </p>
-            <Button size="lg" className="bg-gradient-primary hover:opacity-90">
-              Ver Ubicaciones
-            </Button>
           </div>
         </div>
       </div>

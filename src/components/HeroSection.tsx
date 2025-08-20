@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap, Star } from "lucide-react";
 import heroImage from "@/assets/hero-vape.jpg";
-import vaperosLogo from "@/assets/vaperos-logo.png";
+import vaperosLogo from "@/assets/vaperos-logo-transparent.png";
 
 const HeroSection = () => {
   return (
