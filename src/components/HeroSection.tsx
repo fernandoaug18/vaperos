@@ -31,34 +31,37 @@ const HeroSection = () => {
           </div>
 
           {/* Main Heading */}
-          <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-tight">
-            <span className="text-gradient">Vaperos</span>
+          <h1 className="text-7xl md:text-9xl font-black mb-6 leading-none tracking-tighter">
+            <span className="text-gradient">EL POWER</span>
             <br />
-            <span className="text-foreground/90">Tu Mundo</span>
+            <span className="text-gradient">QUE AMAS</span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
-            Descubre la evolución del vapeo con tecnología de vanguardia, 
-            sabores únicos y la mejor experiencia premium del mercado.
+          <p className="text-2xl md:text-3xl text-accent font-bold mb-4 tracking-wider">
+            VAPEROS
+          </p>
+          <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
+            La vibra más dura del vapeo. Tecnología de otro nivel, 
+            sabores que explotan y el flow que necesitas.
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
             <Button 
               size="lg" 
-              className="bg-gradient-primary hover:shadow-glow transition-all duration-300 text-lg px-8 py-4 rounded-full"
+              className="bg-gradient-primary hover:shadow-glow transition-all duration-300 text-xl font-bold px-12 py-6 rounded-2xl"
             >
-              Explorar Productos
-              <ArrowRight className="ml-2 w-5 h-5" />
+              COMPRA YA
+              <ArrowRight className="ml-3 w-6 h-6" />
             </Button>
             <Button 
               variant="outline" 
               size="lg"
-              className="border-border/50 hover:bg-card/50 backdrop-blur-sm text-lg px-8 py-4 rounded-full"
+              className="border-2 border-accent text-accent hover:bg-accent hover:text-accent-foreground text-xl font-bold px-12 py-6 rounded-2xl"
             >
-              <Zap className="mr-2 w-5 h-5" />
-              Ver Tecnología
+              <Zap className="mr-3 w-6 h-6" />
+              VE EL FLOW
             </Button>
           </div>
 
