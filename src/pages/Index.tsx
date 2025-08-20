@@ -4,6 +4,7 @@ import HeroSection from "@/components/HeroSection";
 import HQDProductsSection from "@/components/HQDProductsSection";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const Index = () => {
   return (
@@ -12,6 +13,7 @@ const Index = () => {
       <HQDProductsSection />
       <FAQSection />
       <Footer />
+      <WhatsAppButton />
     </div>
   );
 };
