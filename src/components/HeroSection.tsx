@@ -38,8 +38,8 @@ const HeroSection = () => {
       <div className="relative z-10 container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto">
           {/* Main Heading */}
-          <h1 className="text-7xl md:text-9xl font-black mb-6 leading-none tracking-tighter">
-            <span className="text-white">VAPEROS</span>
+          <h1 className="text-7xl md:text-9xl font-orbitron font-black mb-6 leading-none tracking-wider">
+            <span className="text-white drop-shadow-2xl">VAPEROS</span>
           </h1>
 
           {/* Subtitle */}
