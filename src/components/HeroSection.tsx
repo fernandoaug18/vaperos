@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Zap, Star } from "lucide-react";
+import { ArrowRight, Cloud, Wind, Droplets, CircleDot, Zap } from "lucide-react";
 import heroImage from "@/assets/hero-vape.jpg";
 import vaperosLogo from "@/assets/vaperos-new-logo.png";
 
@@ -39,9 +39,23 @@ const HeroSection = () => {
         <div className="max-w-4xl mx-auto">
           {/* Main Heading with Vapor Effects */}
           <div className="relative">
-            {/* Smoke/Vapor Effects */}
+            {/* Minimalist Smoke Icons */}
+            <div className="absolute inset-0 -z-5">
+              <Cloud className="absolute top-0 left-16 w-8 h-8 text-white/30 animate-bounce opacity-60" style={{animationDelay: '0s', animationDuration: '4s'}} />
+              <Wind className="absolute top-12 right-20 w-6 h-6 text-blue-200/40 animate-pulse opacity-50" style={{animationDelay: '1s'}} />
+              <Droplets className="absolute -top-4 right-32 w-5 h-5 text-cyan-300/50 animate-bounce opacity-70" style={{animationDelay: '2s', animationDuration: '3s'}} />
+              <CircleDot className="absolute top-8 left-32 w-4 h-4 text-white/25 animate-pulse opacity-40" style={{animationDelay: '3s'}} />
+              
+              <Cloud className="absolute bottom-4 right-12 w-7 h-7 text-blue-100/35 animate-bounce opacity-55" style={{animationDelay: '1.5s', animationDuration: '5s'}} />
+              <Wind className="absolute bottom-8 left-24 w-5 h-5 text-cyan-200/45 animate-pulse opacity-60" style={{animationDelay: '2.5s'}} />
+              <Droplets className="absolute bottom-0 left-40 w-6 h-6 text-white/30 animate-bounce opacity-50" style={{animationDelay: '0.5s', animationDuration: '4.5s'}} />
+              
+              <CircleDot className="absolute top-16 left-8 w-3 h-3 text-blue-300/40 animate-pulse opacity-45" style={{animationDelay: '4s'}} />
+              <CircleDot className="absolute bottom-12 right-8 w-4 h-4 text-cyan-100/35 animate-pulse opacity-50" style={{animationDelay: '2s'}} />
+            </div>
+            
+            {/* Animated smoke clouds */}
             <div className="absolute inset-0 -z-10">
-              {/* Animated smoke clouds */}
               <div className="smoke-cloud smoke-1"></div>
               <div className="smoke-cloud smoke-2"></div>
               <div className="smoke-cloud smoke-3"></div>
