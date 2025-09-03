@@ -34,17 +34,21 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const addToCart = (product: Product) => {
+    console.log('Adding product to cart:', product);
     setItems(prev => {
       const existingItem = prev.find(item => item.id === product.id);
       if (existingItem) {
+        console.log('Product already in cart, increasing quantity');
         return prev.map(item =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       }
+      console.log('New product added to cart');
       return [...prev, { ...product, quantity: 1 }];
     });
+    console.log('Opening cart drawer');
     setIsOpen(true);
   };
 
@@ -76,7 +80,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const getTotalPrice = () => {
     return items.reduce((total, item) => {
-      const price = parseFloat(item.price.replace('.', ''));
+      // Parse Chilean price format (e.g., "12.000" -> 12000)
+      const price = parseFloat(item.price.replace(/\./g, ''));
+      console.log('Parsing price:', item.price, '-> ', price, 'for item:', item.name);
       return total + (price * item.quantity);
     }, 0);
   };

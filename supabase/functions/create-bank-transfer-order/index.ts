@@ -7,6 +7,8 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
+  console.log('CREATE-BANK-TRANSFER: Function started');
+  
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -14,6 +16,7 @@ serve(async (req) => {
 
   try {
     const { items, total } = await req.json();
+    console.log('CREATE-BANK-TRANSFER: Received data', { items, total });
 
     // Create Supabase client for service role operations
     const supabaseService = createClient(
@@ -37,16 +40,18 @@ serve(async (req) => {
       const { data } = await supabaseClient.auth.getUser(token);
       userId = data.user?.id;
     }
+    console.log('CREATE-BANK-TRANSFER: User', { userId });
 
     // Generate unique bank transfer reference
     const bankReference = `BT-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    console.log('CREATE-BANK-TRANSFER: Bank reference generated', bankReference);
 
     // Create order in database
     const { data: order, error: orderError } = await supabaseService
       .from('orders')
       .insert({
         user_id: userId,
-        total: total,
+        total: Math.round(total),
         status: 'pending',
         payment_method: 'bank_transfer',
         bank_transfer_reference: bankReference
@@ -55,29 +60,31 @@ serve(async (req) => {
       .single();
 
     if (orderError) {
-      console.error('Error creating order:', orderError);
+      console.error('CREATE-BANK-TRANSFER: Error creating order:', orderError);
       throw orderError;
     }
+    console.log('CREATE-BANK-TRANSFER: Order created', { orderId: order.id });
 
     // Create order items
     const orderItems = items.map((item: any) => ({
       order_id: order.id,
       product_id: item.id.toString(),
       name: item.name,
-      price: item.price,
+      price: Math.round(item.price),
       quantity: item.quantity
     }));
+    console.log('CREATE-BANK-TRANSFER: Order items prepared', orderItems);
 
     const { error: itemsError } = await supabaseService
       .from('order_items')
       .insert(orderItems);
 
     if (itemsError) {
-      console.error('Error creating order items:', itemsError);
+      console.error('CREATE-BANK-TRANSFER: Error creating order items:', itemsError);
       throw itemsError;
     }
 
-    console.log('Bank transfer order created successfully:', order.id);
+    console.log('CREATE-BANK-TRANSFER: Bank transfer order created successfully:', order.id);
 
     return new Response(
       JSON.stringify({ 
@@ -93,7 +100,7 @@ serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('Error in create-bank-transfer-order:', error);
+    console.error('CREATE-BANK-TRANSFER: Error in create-bank-transfer-order:', error);
     return new Response(
       JSON.stringify({ error: error.message }),
       { 

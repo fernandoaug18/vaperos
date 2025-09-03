@@ -36,27 +36,43 @@ export const PaymentMethodSelector = ({
   const handleStripePayment = async () => {
     setLoading(true);
     try {
+      console.log('Starting payment with items:', items);
+      console.log('Total price:', total);
+      
+      const processedItems = items.map(item => ({
+        id: item.id,
+        name: item.name,
+        price: parseFloat(item.price.replace(/\./g, '')), // Handle Chilean format correctly
+        quantity: item.quantity
+      }));
+      
+      console.log('Processed items for payment:', processedItems);
+      
       const { data, error } = await supabase.functions.invoke('create-payment', {
         body: { 
-          items: items.map(item => ({
-            id: item.id,
-            name: item.name,
-            price: parseFloat(item.price.replace('.', '')),
-            quantity: item.quantity
-          })),
+          items: processedItems,
           total: total
         }
       });
 
-      if (error) throw error;
+      console.log('Payment response:', data, error);
+
+      if (error) {
+        console.error('Payment error:', error);
+        throw error;
+      }
 
       if (data?.url) {
+        console.log('Redirecting to Stripe:', data.url);
         window.open(data.url, '_blank');
+      } else {
+        throw new Error('No payment URL received');
       }
     } catch (error) {
+      console.error('Payment failed:', error);
       toast({
         title: "Error",
-        description: "No se pudo procesar el pago. Inténtalo de nuevo.",
+        description: `No se pudo procesar el pago: ${error.message || 'Error desconocido'}`,
         variant: "destructive"
       });
     } finally {
@@ -67,19 +83,31 @@ export const PaymentMethodSelector = ({
   const handleBankTransfer = async () => {
     setLoading(true);
     try {
+      console.log('Starting bank transfer with items:', items);
+      console.log('Total price:', total);
+      
+      const processedItems = items.map(item => ({
+        id: item.id,
+        name: item.name,
+        price: parseFloat(item.price.replace(/\./g, '')), // Handle Chilean format correctly
+        quantity: item.quantity
+      }));
+      
+      console.log('Processed items for bank transfer:', processedItems);
+      
       const { data, error } = await supabase.functions.invoke('create-bank-transfer-order', {
         body: { 
-          items: items.map(item => ({
-            id: item.id,
-            name: item.name,
-            price: parseFloat(item.price.replace('.', '')),
-            quantity: item.quantity
-          })),
+          items: processedItems,
           total: total
         }
       });
 
-      if (error) throw error;
+      console.log('Bank transfer response:', data, error);
+
+      if (error) {
+        console.error('Bank transfer error:', error);
+        throw error;
+      }
 
       toast({
         title: "Orden Creada",
@@ -89,9 +117,10 @@ export const PaymentMethodSelector = ({
 
       onOpenChange(false);
     } catch (error) {
+      console.error('Bank transfer failed:', error);
       toast({
         title: "Error",
-        description: "No se pudo crear la orden. Inténtalo de nuevo.",
+        description: `No se pudo crear la orden: ${error.message || 'Error desconocido'}`,
         variant: "destructive"
       });
     } finally {
@@ -118,7 +147,7 @@ export const PaymentMethodSelector = ({
               {items.map((item) => (
                 <div key={item.id} className="flex justify-between">
                   <span>{item.name} x{item.quantity}</span>
-                  <span>${parseFloat(item.price.replace('.', '')) * item.quantity}</span>
+                  <span>${parseFloat(item.price.replace(/\./g, '')) * item.quantity}</span>
                 </div>
               ))}
             </div>
