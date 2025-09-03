@@ -1,8 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Star } from "lucide-react";
+import { useCart } from "@/hooks/useCart";
 
 const HQDProductsSection = () => {
+  const { addToCart } = useCart();
+  
   const hqdProducts = [
     {
       id: 1,
@@ -93,9 +96,10 @@ const HQDProductsSection = () => {
                       <Button 
                         className="w-full bg-sky-400 hover:bg-sky-300 text-white hover:text-gray-900 transition-all duration-300"
                         size="sm"
+                        onClick={() => addToCart(product)}
                       >
                         <ShoppingCart className="w-4 h-4 mr-2" />
-                        Comprar Ahora
+                        Agregar al Carrito
                       </Button>
                     </div>
                   </div>

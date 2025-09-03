@@ -6,6 +6,7 @@ import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import AgeVerification from "@/components/AgeVerification";
+import Header from "@/components/Header";
 import { useState, useEffect } from "react";
 
 const Index = () => {
@@ -28,6 +29,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
+      <Header />
       <HeroSection />
       <HQDProductsSection />
       <FAQSection />
