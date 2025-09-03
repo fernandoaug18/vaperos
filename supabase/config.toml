@@ -1,1 +1,7 @@
 project_id = "hnubweogzsnkbscxpphp"
+
+[functions.create-payment]
+verify_jwt = false
+
+[functions.create-bank-transfer-order]
+verify_jwt = false
