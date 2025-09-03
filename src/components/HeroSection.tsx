@@ -37,10 +37,22 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto">
-          {/* Main Heading */}
-          <h1 className="text-7xl md:text-9xl font-orbitron font-black mb-6 leading-none tracking-wider">
-            <span className="text-white drop-shadow-2xl">VAPEROS</span>
-          </h1>
+          {/* Main Heading with Vapor Effects */}
+          <div className="relative">
+            {/* Smoke/Vapor Effects */}
+            <div className="absolute inset-0 -z-10">
+              {/* Animated smoke clouds */}
+              <div className="smoke-cloud smoke-1"></div>
+              <div className="smoke-cloud smoke-2"></div>
+              <div className="smoke-cloud smoke-3"></div>
+              <div className="smoke-cloud smoke-4"></div>
+              <div className="smoke-cloud smoke-5"></div>
+            </div>
+            
+            <h1 className="text-7xl md:text-9xl font-orbitron font-black mb-6 leading-none tracking-wider relative">
+              <span className="vapor-text">VAPEROS</span>
+            </h1>
+          </div>
 
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
