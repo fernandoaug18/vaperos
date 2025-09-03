@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import whatsappLogo from "@/assets/whatsapp-official-logo.png";
 
 const WhatsAppButton = () => {
   const phoneNumber = "56945856240"; // WhatsApp number
@@ -10,7 +11,7 @@ const WhatsAppButton = () => {
       <Button
         asChild
         size="lg"
-        className="bg-green-500 hover:bg-green-600 text-white rounded-full w-16 h-16 shadow-lg hover:shadow-xl transition-all duration-300"
+        className="bg-green-500 hover:bg-green-600 text-white rounded-full w-16 h-16 shadow-lg hover:shadow-xl transition-all duration-300 p-0"
       >
         <a
           href={whatsappUrl}
@@ -19,9 +20,9 @@ const WhatsAppButton = () => {
           aria-label="Contactar por WhatsApp"
         >
           <img 
-            src="/src/assets/whatsapp-logo.svg" 
+            src={whatsappLogo}
             alt="WhatsApp" 
-            className="w-8 h-8 filter brightness-0 invert"
+            className="w-10 h-10"
           />
         </a>
       </Button>

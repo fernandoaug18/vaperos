@@ -93,14 +93,17 @@ const HQDProductsSection = () => {
                         ${product.price}
                       </div>
                       
-                      <Button 
-                        className="w-full bg-sky-400 hover:bg-sky-300 text-white hover:text-gray-900 transition-all duration-300"
-                        size="sm"
-                        onClick={() => addToCart(product)}
-                      >
-                        <ShoppingCart className="w-4 h-4 mr-2" />
-                        Agregar al Carrito
-                      </Button>
+                       <Button 
+                         className="w-full bg-sky-400 hover:bg-sky-300 text-white hover:text-gray-900 transition-all duration-300"
+                         size="sm"
+                         onClick={() => {
+                           console.log('Botón Agregar al Carrito clickeado para producto:', product);
+                           addToCart(product);
+                         }}
+                       >
+                         <ShoppingCart className="w-4 h-4 mr-2" />
+                         Agregar al Carrito
+                       </Button>
                     </div>
                   </div>
                 </div>
