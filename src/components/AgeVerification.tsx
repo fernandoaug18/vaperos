@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import vaperosLogo from "@/assets/vaperos-logo-transparent.png";
-import ageLogo from "@/assets/18-plus-logo-transparent.png";
 
 interface AgeVerificationProps {
   onVerified: () => void;
@@ -22,13 +20,8 @@ const AgeVerification = ({ onVerified }: AgeVerificationProps) => {
   if (showUnderageMessage) {
     return (
       <div className="fixed inset-0 bg-background z-50 flex items-center justify-center p-4">
-        <div className="max-w-md w-full text-center space-y-6">
-          <img 
-            src={vaperosLogo} 
-            alt="Vaperos Logo" 
-            className="h-16 mx-auto"
-          />
-          <div className="space-y-4">
+      <div className="max-w-md w-full text-center space-y-6">
+        <div className="space-y-4">
             <h1 className="text-2xl font-bold text-foreground">
               ACCESO RESTRINGIDO
             </h1>
@@ -46,20 +39,7 @@ const AgeVerification = ({ onVerified }: AgeVerificationProps) => {
 
   return (
     <div className="fixed inset-0 bg-background z-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full text-center space-y-8">
-        <div className="flex justify-center items-center gap-4">
-          <img 
-            src={vaperosLogo} 
-            alt="Vaperos Logo" 
-            className="h-16"
-          />
-          <img 
-            src={ageLogo} 
-            alt="18+ Logo" 
-            className="h-12"
-          />
-        </div>
-        
+      <div className="max-w-md w-full text-center space-y-8">        
         <div className="space-y-4">
           <h1 className="text-2xl font-bold text-foreground">
             PARA UTILIZAR EL SITIO WEB DE VAPEROS DEBES SER MAYOR DE 18 AÑOS
