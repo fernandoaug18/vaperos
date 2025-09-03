@@ -8,17 +8,28 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
+  console.log("CREATE-PAYMENT: Function started");
+  
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
     const { items, total } = await req.json();
+    console.log("CREATE-PAYMENT: Received data", { items, total });
+
+    // Check if Stripe secret key exists
+    const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
+    if (!stripeKey) {
+      console.error("CREATE-PAYMENT: STRIPE_SECRET_KEY not found");
+      throw new Error("STRIPE_SECRET_KEY not configured");
+    }
 
     // Initialize Stripe
-    const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
+    const stripe = new Stripe(stripeKey, {
       apiVersion: "2023-10-16",
     });
+    console.log("CREATE-PAYMENT: Stripe initialized");
 
     // Create Supabase client
     const supabaseClient = createClient(
@@ -34,6 +45,7 @@ serve(async (req) => {
       const { data } = await supabaseClient.auth.getUser(token);
       user = data.user;
     }
+    console.log("CREATE-PAYMENT: User", { userId: user?.id, email: user?.email });
 
     // Create line items for Stripe
     const lineItems = items.map((item: any) => ({
@@ -42,10 +54,11 @@ serve(async (req) => {
         product_data: {
           name: item.name,
         },
-        unit_amount: Math.round(item.price), // Already in cents
+        unit_amount: Math.round(item.price),
       },
       quantity: item.quantity,
     }));
+    console.log("CREATE-PAYMENT: Line items created", lineItems);
 
     // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({
@@ -59,8 +72,9 @@ serve(async (req) => {
         total_amount: total.toString(),
       },
     });
+    console.log("CREATE-PAYMENT: Stripe session created", { sessionId: session.id });
 
-    // Create order in database
+    // Create order in database using correct schema
     const supabaseService = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
@@ -71,9 +85,7 @@ serve(async (req) => {
       .from("orders")
       .insert({
         user_id: user?.id || null,
-        email: user?.email || "guest@vaperos.cl",
-        total_amount: Math.round(total),
-        currency: "CLP",
+        total: Math.round(total),
         status: "pending",
         payment_method: "stripe",
         stripe_session_id: session.id,
@@ -81,14 +93,17 @@ serve(async (req) => {
       .select()
       .single();
 
-    if (orderError) throw orderError;
+    if (orderError) {
+      console.error("CREATE-PAYMENT: Order creation error", orderError);
+      throw orderError;
+    }
+    console.log("CREATE-PAYMENT: Order created", { orderId: order.id });
 
-    // Create order items
+    // Create order items using correct schema
     const orderItems = items.map((item: any) => ({
       order_id: order.id,
-      product_id: item.id,
-      product_name: item.name,
-      product_flavor: item.flavor || "",
+      product_id: item.id.toString(),
+      name: item.name,
       price: Math.round(item.price),
       quantity: item.quantity,
     }));
@@ -97,14 +112,18 @@ serve(async (req) => {
       .from("order_items")
       .insert(orderItems);
 
-    if (itemsError) throw itemsError;
+    if (itemsError) {
+      console.error("CREATE-PAYMENT: Order items creation error", itemsError);
+      throw itemsError;
+    }
+    console.log("CREATE-PAYMENT: Order items created successfully");
 
     return new Response(JSON.stringify({ url: session.url }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });
   } catch (error) {
-    console.error("Error:", error);
+    console.error("CREATE-PAYMENT: Error", error);
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 500,
