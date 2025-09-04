@@ -26,10 +26,9 @@ jobs:
       - run: npm ci
       - run: npm run build
 
-      # 👇 Copia index.html a 404.html para rutas SPA
+      # Fallback SPA: GitHub Pages sirve 404 en rutas profundas; esto lo resuelve
       - run: cp dist/index.html dist/404.html
 
-      # Si tu build sale en otra carpeta (ej. build/), ajusta 'dist' por la tuya
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
@@ -43,3 +42,4 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
