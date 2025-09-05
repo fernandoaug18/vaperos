@@ -7,8 +7,8 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import Header from "@/components/Header";
 import AgeVerification from "@/components/AgeVerification";
 const Index = () => {
-  const [isAgeVerified, setIsAgeVerified] = useState(true); // Cambiado a true para saltarnos la verificación
-  const [isLoading, setIsLoading] = useState(false); // Cambiado a false
+  const [isAgeVerified, setIsAgeVerified] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleAgeVerified = () => {
     setIsAgeVerified(true);
