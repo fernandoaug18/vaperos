@@ -13,52 +13,62 @@ const GlazePro = () => {
     {
       name: "Grape",
       description: "¡Zambullirse en uvas maduradas al sol! Esencia jugosa de viñedo chileno—remolinos profundos y exuberantes bajando por tu garganta.",
-      color: "from-purple-600 to-purple-400"
+      color: "from-purple-600 to-purple-400",
+      image: "/lovable-uploads/347860bf-d5eb-445d-9656-fbed965dfa03.png"
     },
     {
       name: "Blue Razz Ice",
       description: "¡Congelación de baya eléctrica! Frambuesas azules vibrantes electrizadas con hielo—relámpago de sabor audaz.",
-      color: "from-blue-500 to-cyan-400"
+      color: "from-blue-500 to-cyan-400",
+      image: "/lovable-uploads/472cf7f9-62da-4171-89fc-4cbfaa485222.png"
     },
     {
       name: "Ice Mint",
       description: "¡Aliento antártico! Congelación de cristal de menta pura bailando como como el viento andino.",
-      color: "from-green-400 to-teal-300"
+      color: "from-green-400 to-teal-300",
+      image: "/lovable-uploads/238d1e3d-0c60-4178-94ad-f8fecb83a155.png"
     },
     {
       name: "Strawberry Kiwi",
       description: "¡Dúo tropical de tangol de kiwi! Vibrante pareja a las fresas dulces—euforia llena de vida.",
-      color: "from-red-400 to-green-300"
+      color: "from-red-400 to-green-300",
+      image: "/lovable-uploads/4b0a58f1-8714-4cfc-bedc-dbf7e82e1f1e.png"
     },
     {
       name: "Lush Ice",
       description: "¡Oleada de sandía helada! Frescor jugoso que balla en tu lengua—como zambullirse en una piscina de verano gelida.",
-      color: "from-red-400 to-pink-300"
+      color: "from-red-400 to-pink-300",
+      image: "/lovable-uploads/1a2c4b49-f523-4c75-bd5e-b5e180d2ba33.png"
     },
     {
       name: "Strawberry Watermelon",
       description: "¡Explosión de alegría roja! Gemelos jugosos estallando hidratación—secreto veraniego para saciar la sed.",
-      color: "from-red-500 to-pink-400"
+      color: "from-red-500 to-pink-400",
+      image: "/lovable-uploads/4fa9e4e2-efaf-4a64-9bcf-0b7a88fa49e3.png"
     },
     {
       name: "Mango",
       description: "¡Trópicos dorados en vapor! Néctar de mango cremoso tan espeso—saborear el sol.",
-      color: "from-yellow-500 to-orange-400"
+      color: "from-yellow-500 to-orange-400",
+      image: "/lovable-uploads/42e0f17b-1cd9-48c9-bc5b-5fbf912a3632.png"
     },
     {
       name: "Strawberry Banana",
       description: "¡Dúo cremoso de ensueño! Plátano maduro emplazado sobre fresas ruborizadas—dúo nube de postre líquido.",
-      color: "from-yellow-400 to-pink-300"
+      color: "from-yellow-400 to-pink-300",
+      image: "/lovable-uploads/1a2c4b49-f523-4c75-bd5e-b5e180d2ba33.png"
     },
     {
       name: "Black Dragon",
       description: "¡Bestia mítica de bayas! Profundidad de mora con magia de fruta del dragón—vapor exótica en cada calada.",
-      color: "from-gray-700 to-purple-900"
+      color: "from-gray-700 to-purple-900",
+      image: "/lovable-uploads/76a7d635-f8a0-4592-a807-2b86fd68affe.png"
     },
     {
       name: "Black Ice",
       description: "¡Escarcha de mora nocturnal! Frutos oscuros bajo luna helada—frescor misterioso que perdura.",
-      color: "from-gray-700 to-blue-900"
+      color: "from-gray-700 to-blue-900",
+      image: "/lovable-uploads/9eb3de69-aed4-4cfb-8c6f-8831d42cdf0d.png"
     }
   ];
 
@@ -143,8 +153,14 @@ const GlazePro = () => {
               <Card key={index} className="bg-card/50 backdrop-blur-sm border-border/50 hover:shadow-glow transition-all duration-300 group">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4">
-                    <div className={`w-16 h-16 rounded-lg bg-gradient-to-br ${flavor.color} flex-shrink-0`}></div>
-                    <div>
+                    <div className="w-24 h-24 flex-shrink-0 flex items-center justify-center">
+                      <img 
+                        src={flavor.image} 
+                        alt={flavor.name}
+                        className="w-full h-full object-contain drop-shadow-lg group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                    <div className="flex-1">
                       <h3 className="text-lg font-bold mb-2">{flavor.name}</h3>
                       <p className="text-sm text-muted-foreground">{flavor.description}</p>
                     </div>
