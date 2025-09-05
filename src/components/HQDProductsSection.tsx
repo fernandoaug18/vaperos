@@ -59,6 +59,7 @@ const HQDProductsSection = () => {
   return (
     <section className="py-20 px-4 bg-gradient-subtle">
       <div className="container mx-auto">
+        <div id="productos-hqd" className="text-center mb-16"></div>
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Productos <span className="text-white">HQD</span>

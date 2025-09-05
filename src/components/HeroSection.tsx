@@ -79,6 +79,12 @@ const HeroSection = () => {
             <Button 
               size="lg" 
               className="bg-sky-400 hover:bg-sky-300 text-white hover:text-gray-900 transition-all duration-300 text-xl font-bold px-12 py-6 rounded-2xl"
+              onClick={() => {
+                document.getElementById('productos-hqd')?.scrollIntoView({ 
+                  behavior: 'smooth', 
+                  block: 'start' 
+                });
+              }}
             >
               VER PRODUCTOS
               <ArrowRight className="ml-3 w-6 h-6" />
