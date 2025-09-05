@@ -20,7 +20,7 @@ const GlazePro = () => {
       name: "Blue Razz Ice",
       description: "¡Congelación de baya eléctrica! Frambuesas azules vibrantes electrizadas con hielo—relámpago de sabor audaz.",
       color: "from-blue-500 to-cyan-400",
-      image: "/lovable-uploads/472cf7f9-62da-4171-89fc-4cbfaa485222.png"
+      image: "/lovable-uploads/76a7d635-f8a0-4592-a807-2b86fd68affe.png"
     },
     {
       name: "Ice Mint",
@@ -32,13 +32,13 @@ const GlazePro = () => {
       name: "Strawberry Kiwi",
       description: "¡Dúo tropical de tangol de kiwi! Vibrante pareja a las fresas dulces—euforia llena de vida.",
       color: "from-red-400 to-green-300",
-      image: "/lovable-uploads/4b0a58f1-8714-4cfc-bedc-dbf7e82e1f1e.png"
+      image: "/lovable-uploads/1a2c4b49-f523-4c75-bd5e-b5e180d2ba33.png"
     },
     {
       name: "Lush Ice",
       description: "¡Oleada de sandía helada! Frescor jugoso que balla en tu lengua—como zambullirse en una piscina de verano gelida.",
       color: "from-red-400 to-pink-300",
-      image: "/lovable-uploads/1a2c4b49-f523-4c75-bd5e-b5e180d2ba33.png"
+      image: "/lovable-uploads/4b0a58f1-8714-4cfc-bedc-dbf7e82e1f1e.png"
     },
     {
       name: "Strawberry Watermelon",
@@ -56,19 +56,19 @@ const GlazePro = () => {
       name: "Strawberry Banana",
       description: "¡Dúo cremoso de ensueño! Plátano maduro emplazado sobre fresas ruborizadas—dúo nube de postre líquido.",
       color: "from-yellow-400 to-pink-300",
-      image: "/lovable-uploads/1a2c4b49-f523-4c75-bd5e-b5e180d2ba33.png"
+      image: "/lovable-uploads/2ad214cc-6d5c-494d-af7d-8456af0356bb.png"
     },
     {
       name: "Black Dragon",
       description: "¡Bestia mítica de bayas! Profundidad de mora con magia de fruta del dragón—vapor exótica en cada calada.",
       color: "from-gray-700 to-purple-900",
-      image: "/lovable-uploads/76a7d635-f8a0-4592-a807-2b86fd68affe.png"
+      image: "/lovable-uploads/9eb3de69-aed4-4cfb-8c6f-8831d42cdf0d.png"
     },
     {
-      name: "Black Ice",
+      name: "Black Ice",  
       description: "¡Escarcha de mora nocturnal! Frutos oscuros bajo luna helada—frescor misterioso que perdura.",
       color: "from-gray-700 to-blue-900",
-      image: "/lovable-uploads/9eb3de69-aed4-4cfb-8c6f-8831d42cdf0d.png"
+      image: "/lovable-uploads/472cf7f9-62da-4171-89fc-4cbfaa485222.png"
     }
   ];
 
