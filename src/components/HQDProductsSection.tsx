@@ -68,7 +68,7 @@ const HQDProductsSection = () => {
                       <img 
                         src={product.image} 
                         alt={product.name}
-                        className="w-full h-full object-contain max-w-[200px] drop-shadow-lg group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-contain max-w-[280px] drop-shadow-lg group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>
                     
@@ -82,9 +82,6 @@ const HQDProductsSection = () => {
                         <span>{product.nicotine} nicotina</span>
                       </div>
                       
-                      <div className="text-2xl font-bold text-white mb-4">
-                        ${product.price}
-                      </div>
                       
                        <Button 
                          className="w-full bg-sky-400 hover:bg-sky-300 text-white hover:text-gray-900 transition-all duration-300"
