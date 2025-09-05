@@ -65,7 +65,7 @@ const ClickPlus = () => {
   const product = {
     id: 3,
     name: "HQD CLICK PLUS",
-    image: "/lovable-uploads/f11c52e2-d26b-4296-89d9-37c690fa1e94.png",
+    image: "/lovable-uploads/7d14719a-22f9-4241-9d86-26f137fa1ecd.png",
     price: "25.000",
     puffs: "30000",
     nicotine: "4.5%"

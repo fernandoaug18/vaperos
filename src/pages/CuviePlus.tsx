@@ -65,7 +65,7 @@ const CuviePlus = () => {
   const product = {
     id: 1,
     name: "HQD CUVIE PLUS 2.0",
-    image: "/lovable-uploads/fa4fa0e0-41f7-491f-9ceb-ba9d838693ea.png",
+    image: "/lovable-uploads/331a96a0-57a1-451f-a65e-624f82604cf3.png",
     price: "15.000",
     puffs: "9000",
     nicotine: "4.5%"
