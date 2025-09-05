@@ -2,9 +2,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Star } from "lucide-react";
 import { useCart } from "@/hooks/useCart";
+import { useNavigate } from "react-router-dom";
 
 const HQDProductsSection = () => {
   const { addToCart } = useCart();
+  const navigate = useNavigate();
   
   const hqdProducts = [
     {
@@ -15,7 +17,8 @@ const HQDProductsSection = () => {
       price: "15.000",
       puffs: "9000",
       nicotine: "4.5%",
-      color: "from-green-500 to-emerald-400"
+      color: "from-green-500 to-emerald-400",
+      route: "/cuvie-plus"
     },
     {
       id: 2,
@@ -25,7 +28,8 @@ const HQDProductsSection = () => {
       price: "15.000",
       puffs: "18000",
       nicotine: "4.5%",
-      color: "from-pink-500 to-purple-400"
+      color: "from-pink-500 to-purple-400",
+      route: "/glaze-pro"
     },
     {
       id: 3,
@@ -35,7 +39,8 @@ const HQDProductsSection = () => {
       price: "15.000",
       puffs: "30000",
       nicotine: "4.5%",
-      color: "from-orange-500 to-yellow-400"
+      color: "from-orange-500 to-yellow-400",
+      route: "/click-plus"
     }
   ];
 
@@ -52,7 +57,8 @@ const HQDProductsSection = () => {
           {hqdProducts.map((product) => (
             <Card 
               key={product.id} 
-              className="bg-card/50 backdrop-blur-sm border-border/50 hover:shadow-glow transition-all duration-300 group overflow-hidden"
+              className="bg-card/50 backdrop-blur-sm border-border/50 hover:shadow-glow transition-all duration-300 group overflow-hidden cursor-pointer"
+              onClick={() => navigate(product.route)}
             >
               <CardContent className="p-0">
                 <div className="relative">

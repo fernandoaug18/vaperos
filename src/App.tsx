@@ -9,6 +9,9 @@ import FAQ from "./pages/FAQ";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancelled from "./pages/PaymentCancelled";
 import NotFound from "./pages/NotFound";
+import CuviePlus from "./pages/CuviePlus";
+import GlazePro from "./pages/GlazePro";
+import ClickPlus from "./pages/ClickPlus";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +25,9 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/faq" element={<FAQ />} />
+            <Route path="/cuvie-plus" element={<CuviePlus />} />
+            <Route path="/glaze-pro" element={<GlazePro />} />
+            <Route path="/click-plus" element={<ClickPlus />} />
             <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/payment-cancelled" element={<PaymentCancelled />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
