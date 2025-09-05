@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import Header from "@/components/Header";
 import AgeVerification from "@/components/AgeVerification";
+import ImageBackgroundRemover from "@/components/ImageBackgroundRemover";
 
 const Index = () => {
   const [isAgeVerified, setIsAgeVerified] = useState(true); // Cambiado a true para saltarnos la verificación
@@ -27,6 +28,9 @@ const Index = () => {
     <div className="min-h-screen">
       <Header />
       <HeroSection />
+      <div className="container mx-auto px-4 py-8">
+        <ImageBackgroundRemover />
+      </div>
       <HQDProductsSection />
       <FAQSection />
       <Footer />
