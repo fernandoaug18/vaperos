@@ -9,22 +9,46 @@ const HQDProductsSection = () => {
   const navigate = useNavigate();
   
   const hqdProducts = [
+    // HQD CUVIE PLUS 2.0 variants
     {
       id: 1,
       name: "HQD CUVIE PLUS 2.0",
-      flavor: "Green Apple Ice",
-      image: "/lovable-uploads/fa4fa0e0-41f7-491f-9ceb-ba9d838693ea.png",
+      flavor: "Black Ice",
+      image: "/lovable-uploads/0a75ffdf-3335-4167-a3cd-f740819a7c9f.png",
       price: "15.000",
       puffs: "9000",
       nicotine: "4.5%",
-      color: "from-green-500 to-emerald-400",
+      color: "from-gray-700 to-blue-900",
       route: "/cuvie-plus"
     },
     {
       id: 2,
+      name: "HQD CUVIE PLUS 2.0",
+      flavor: "Blue Razz Ice",
+      image: "/lovable-uploads/2c147a77-ba17-4fc4-8700-1e93e8e568ec.png",
+      price: "15.000",
+      puffs: "9000",
+      nicotine: "4.5%",
+      color: "from-blue-500 to-cyan-400",
+      route: "/cuvie-plus"
+    },
+    {
+      id: 3,
+      name: "HQD CUVIE PLUS 2.0",
+      flavor: "Grape",
+      image: "/lovable-uploads/de0d0156-6f06-4359-858b-06698143aaa3.png",
+      price: "15.000",
+      puffs: "9000",
+      nicotine: "4.5%",
+      color: "from-purple-600 to-purple-400",
+      route: "/cuvie-plus"
+    },
+    // HQD GLAZE PRO variants
+    {
+      id: 4,
       name: "HQD GLAZE PRO",
       flavor: "Black Dragon",
-      image: "/lovable-uploads/82e4db00-2ef0-4f41-841d-6fa84271a7ab.png",
+      image: "/lovable-uploads/7713023c-b2be-4d25-89d9-f00d21a3c511.png",
       price: "20.000",
       puffs: "18000",
       nicotine: "4.5%",
@@ -32,14 +56,59 @@ const HQDProductsSection = () => {
       route: "/glaze-pro"
     },
     {
-      id: 3,
+      id: 5,
+      name: "HQD GLAZE PRO",
+      flavor: "Mango",
+      image: "/lovable-uploads/607f46c9-4fd6-4b20-a99c-90f9bdba4126.png",
+      price: "20.000",
+      puffs: "18000",
+      nicotine: "4.5%",
+      color: "from-yellow-500 to-orange-400",
+      route: "/glaze-pro"
+    },
+    {
+      id: 6,
+      name: "HQD GLAZE PRO",
+      flavor: "Strawberry Kiwi",
+      image: "/lovable-uploads/45fd4e37-6575-47ef-a083-c2a136a8fb98.png",
+      price: "20.000",
+      puffs: "18000",
+      nicotine: "4.5%",
+      color: "from-green-400 to-teal-300",
+      route: "/glaze-pro"
+    },
+    // HQD CLICK PLUS variants
+    {
+      id: 7,
       name: "HQD CLICK PLUS",
-      flavor: "Mango Peach",
-      image: "/lovable-uploads/f11c52e2-d26b-4296-89d9-37c690fa1e94.png",
+      flavor: "Blueberry Dragonfruit",
+      image: "/lovable-uploads/79b9069c-48c6-4591-989a-26f119163b35.png",
       price: "25.000",
       puffs: "30000",
       nicotine: "4.5%",
-      color: "from-orange-500 to-yellow-400",
+      color: "from-purple-500 to-blue-400",
+      route: "/click-plus"
+    },
+    {
+      id: 8,
+      name: "HQD CLICK PLUS",
+      flavor: "Strawberry Banana",
+      image: "/lovable-uploads/fc9f048c-afca-4c26-be94-62b2026fa12f.png",
+      price: "25.000",
+      puffs: "30000",
+      nicotine: "4.5%",
+      color: "from-yellow-400 to-red-400",
+      route: "/click-plus"
+    },
+    {
+      id: 9,
+      name: "HQD CLICK PLUS",
+      flavor: "Strawberry Watermelon",
+      image: "/lovable-uploads/ae9cad73-225a-4e0c-94ab-bca561ca650c.png",
+      price: "25.000",
+      puffs: "30000",
+      nicotine: "4.5%",
+      color: "from-red-400 to-pink-400",
       route: "/click-plus"
     }
   ];
