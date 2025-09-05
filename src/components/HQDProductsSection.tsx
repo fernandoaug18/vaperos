@@ -102,7 +102,7 @@ const HQDProductsSection = () => {
                       
                       
                        <Button 
-                         className="bg-sky-400 hover:bg-sky-300 text-white hover:text-gray-900 transition-all duration-300 px-8 py-4 text-lg"
+                         className="bg-sky-400 hover:bg-sky-300 text-white hover:text-gray-900 transition-all duration-300 px-12 py-6 text-lg min-w-[200px]"
                          size="lg"
                          onClick={() => navigate(product.route)}
                        >

@@ -131,10 +131,6 @@ const ArtisticShowcase = () => {
           </div>
 
           <div className="relative z-10">
-            <h2 className="text-4xl md:text-6xl font-bold text-center mb-16 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-              ARTE & VAPOR
-            </h2>
-            
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
               {images.map((image, index) => (
                 <div
