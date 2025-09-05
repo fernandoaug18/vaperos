@@ -14,61 +14,61 @@ const GlazePro = () => {
       name: "Grape",
       description: "¡Zambullirse en uvas maduradas al sol! Esencia jugosa de viñedo chileno—remolinos profundos y exuberantes bajando por tu garganta.",
       color: "from-purple-600 to-purple-400",
-      image: "/lovable-uploads/347860bf-d5eb-445d-9656-fbed965dfa03.png"
+      image: "/lovable-uploads/2e8dc846-132b-423a-9584-944ff064d10c.png"
     },
     {
       name: "Blue Razz Ice",
       description: "¡Congelación de baya eléctrica! Frambuesas azules vibrantes electrizadas con hielo—relámpago de sabor audaz.",
       color: "from-blue-500 to-cyan-400",
-      image: "/lovable-uploads/76a7d635-f8a0-4592-a807-2b86fd68affe.png"
+      image: "/lovable-uploads/1068e78b-e08e-4297-b838-fd384b563557.png"
     },
     {
       name: "Ice Mint",
       description: "¡Aliento antártico! Congelación de cristal de menta pura bailando como como el viento andino.",
       color: "from-green-400 to-teal-300",
-      image: "/lovable-uploads/238d1e3d-0c60-4178-94ad-f8fecb83a155.png"
+      image: "/lovable-uploads/58da70f8-ec84-4e7e-9419-bf3546627247.png"
     },
     {
       name: "Strawberry Kiwi",
       description: "¡Dúo tropical de tangol de kiwi! Vibrante pareja a las fresas dulces—euforia llena de vida.",
       color: "from-red-400 to-green-300",
-      image: "/lovable-uploads/1a2c4b49-f523-4c75-bd5e-b5e180d2ba33.png"
+      image: "/lovable-uploads/f2860258-56c1-4285-b843-e9443ee79389.png"
     },
     {
       name: "Lush Ice",
       description: "¡Oleada de sandía helada! Frescor jugoso que balla en tu lengua—como zambullirse en una piscina de verano gelida.",
       color: "from-red-400 to-pink-300",
-      image: "/lovable-uploads/4b0a58f1-8714-4cfc-bedc-dbf7e82e1f1e.png"
+      image: "/lovable-uploads/28072054-a9e3-49d5-8949-c06c9ff88652.png"
     },
     {
       name: "Strawberry Watermelon",
       description: "¡Explosión de alegría roja! Gemelos jugosos estallando hidratación—secreto veraniego para saciar la sed.",
       color: "from-red-500 to-pink-400",
-      image: "/lovable-uploads/4fa9e4e2-efaf-4a64-9bcf-0b7a88fa49e3.png"
+      image: "/lovable-uploads/b5eec5ff-a032-4639-b08c-50ba7e0ad1d3.png"
     },
     {
       name: "Mango",
       description: "¡Trópicos dorados en vapor! Néctar de mango cremoso tan espeso—saborear el sol.",
       color: "from-yellow-500 to-orange-400",
-      image: "/lovable-uploads/42e0f17b-1cd9-48c9-bc5b-5fbf912a3632.png"
+      image: "/lovable-uploads/a431b5bf-cd4c-40a6-8bc0-5a47e6d2fc88.png"
     },
     {
       name: "Strawberry Banana",
       description: "¡Dúo cremoso de ensueño! Plátano maduro emplazado sobre fresas ruborizadas—dúo nube de postre líquido.",
       color: "from-yellow-400 to-pink-300",
-      image: "/lovable-uploads/2ad214cc-6d5c-494d-af7d-8456af0356bb.png"
+      image: "/lovable-uploads/76d0a0cb-330f-4666-bd93-66f072368940.png"
     },
     {
       name: "Black Dragon",
       description: "¡Bestia mítica de bayas! Profundidad de mora con magia de fruta del dragón—vapor exótica en cada calada.",
       color: "from-gray-700 to-purple-900",
-      image: "/lovable-uploads/9eb3de69-aed4-4cfb-8c6f-8831d42cdf0d.png"
+      image: "/lovable-uploads/94c03c49-578b-4fe3-ab41-3cba895f6f7e.png"
     },
     {
       name: "Black Ice",  
       description: "¡Escarcha de mora nocturnal! Frutos oscuros bajo luna helada—frescor misterioso que perdura.",
       color: "from-gray-700 to-blue-900",
-      image: "/lovable-uploads/472cf7f9-62da-4171-89fc-4cbfaa485222.png"
+      image: "/lovable-uploads/6cec0d1d-890c-4c79-a18f-fec350615ffe.png"
     }
   ];
 
