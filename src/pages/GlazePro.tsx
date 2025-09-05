@@ -75,7 +75,7 @@ const GlazePro = () => {
   const product = {
     id: 2,
     name: "HQD GLAZE PRO",
-    image: "/lovable-uploads/f756ebad-4f78-499b-967b-e8b49e9dd3c1.png",
+    image: "/lovable-uploads/d4fe8c30-3b88-4351-9643-5a30ff00c423.png",
     price: "20.000",
     puffs: "18000",
     nicotine: "4.5%"
