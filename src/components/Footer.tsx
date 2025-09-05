@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Instagram } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -31,9 +32,9 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Productos</h4>
             <ul className="space-y-2 text-muted-foreground">
-              <li><a href="#" className="hover:text-primary transition-colors">HQD CUVIE PLUS 2.0</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">HQD GLAZE PRO</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">HQD CLICK PLUS</a></li>
+              <li><Link to="/cuvie-plus" className="hover:text-primary transition-colors">HQD CUVIE PLUS 2.0</Link></li>
+              <li><Link to="/glaze-pro" className="hover:text-primary transition-colors">HQD GLAZE PRO</Link></li>
+              <li><Link to="/click-plus" className="hover:text-primary transition-colors">HQD CLICK PLUS</Link></li>
             </ul>
           </div>
 
