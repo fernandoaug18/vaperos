@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Star } from "lucide-react";
+import { Eye, Star } from "lucide-react";
 import { useCart } from "@/hooks/useCart";
 import { useNavigate } from "react-router-dom";
 
@@ -68,7 +68,7 @@ const HQDProductsSection = () => {
                       <img 
                         src={product.image} 
                         alt={product.name}
-                        className="w-full h-full object-contain max-w-[280px] drop-shadow-lg group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-contain max-w-[350px] drop-shadow-lg group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>
                     
@@ -86,13 +86,10 @@ const HQDProductsSection = () => {
                        <Button 
                          className="w-full bg-sky-400 hover:bg-sky-300 text-white hover:text-gray-900 transition-all duration-300"
                          size="sm"
-                         onClick={() => {
-                           console.log('Botón Agregar al Carrito clickeado para producto:', product);
-                           addToCart(product);
-                         }}
+                         onClick={() => navigate(product.route)}
                        >
-                         <ShoppingCart className="w-4 h-4 mr-2" />
-                         Agregar al Carrito
+                         <Eye className="w-4 h-4 mr-2" />
+                         Conocer más
                        </Button>
                     </div>
                   </div>
