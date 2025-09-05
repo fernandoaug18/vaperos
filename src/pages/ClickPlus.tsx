@@ -66,7 +66,7 @@ const ClickPlus = () => {
     id: 3,
     name: "HQD CLICK PLUS",
     image: "/lovable-uploads/f11c52e2-d26b-4296-89d9-37c690fa1e94.png",
-    price: "15.000",
+    price: "25.000",
     puffs: "30000",
     nicotine: "4.5%"
   };
