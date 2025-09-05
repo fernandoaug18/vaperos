@@ -9,43 +9,33 @@ const HQDProductsSection = () => {
   const hqdProducts = [
     {
       id: 1,
-      name: "HQD Blue Razz Ice",
-      flavor: "Blue Razz Ice",
-      image: "/lovable-uploads/720aa5bf-25a6-47ef-b10c-3772dc729b56.png",
-      price: "15.000",
-      puffs: "9000",
-      nicotine: "4.5%",
-      color: "from-blue-500 to-cyan-400"
-    },
-    {
-      id: 2,
-      name: "HQD Black Ice",
+      name: "HQD CUVIE PLUS 2.0",
       flavor: "Black Ice",
-      image: "/lovable-uploads/4a3ba8d0-3223-4856-a1c6-80855f81707a.png",
+      image: "/lovable-uploads/111b99d2-1cba-4a4f-9746-6b818a2779f4.png",
       price: "15.000",
       puffs: "9000",
       nicotine: "4.5%",
       color: "from-purple-600 to-indigo-500"
     },
     {
-      id: 3,
-      name: "HQD Green Apple Ice",
-      flavor: "Green Apple Ice",
-      image: "/lovable-uploads/98970c14-3d57-4bf9-8e80-3dae14859537.png",
+      id: 2,
+      name: "HQD GLAZE PRO",
+      flavor: "Ice Mint",
+      image: "/lovable-uploads/a51e8369-0710-4463-a114-08e49aef3d18.png",
       price: "15.000",
-      puffs: "9000",
+      puffs: "18000",
       nicotine: "4.5%",
       color: "from-green-500 to-emerald-400"
     },
     {
-      id: 4,
-      name: "HQD Grape",
-      flavor: "Grape",
-      image: "/lovable-uploads/44f41699-c128-4b93-abe3-002033865bd1.png",
+      id: 3,
+      name: "HQD CLICK PLUS",
+      flavor: "Blueberry Cherry",
+      image: "/lovable-uploads/ee45f844-16a5-431f-b94c-9335a1b2ffda.png",
       price: "15.000",
-      puffs: "9000",
+      puffs: "30000",
       nicotine: "4.5%",
-      color: "from-purple-500 to-violet-400"
+      color: "from-pink-500 to-purple-400"
     }
   ];
 
@@ -54,14 +44,11 @@ const HQDProductsSection = () => {
       <div className="container mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Solo <span className="text-white">$15.000</span> cada uno
+            Productos <span className="text-white">HQD</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Los mejores sabores HQD disponibles. 9000 puffs de pura calidad y sabor intenso.
-          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {hqdProducts.map((product) => (
             <Card 
               key={product.id} 
