@@ -76,10 +76,10 @@ const HQDProductsSection = () => {
                 <div className="relative">
                   <div className={`absolute inset-0 bg-gradient-to-br ${product.color} opacity-10 group-hover:opacity-20 transition-opacity duration-300`} />
                   <div className="p-6 relative">
-                    <div className="mb-4">
-                      <div className="grid grid-cols-3 gap-2 mb-4">
+                    <div className="mb-6">
+                      <div className="grid grid-cols-3 gap-3 mb-4">
                         {product.images.map((image, index) => (
-                          <div key={index} className="aspect-square flex items-center justify-center bg-white/5 rounded-lg p-2">
+                          <div key={index} className="aspect-square flex items-center justify-center bg-white/5 rounded-lg p-3">
                             <img 
                               src={image} 
                               alt={`${product.name} - ${product.flavors[index]}`}
@@ -91,10 +91,9 @@ const HQDProductsSection = () => {
                     </div>
                     
                     <div className="text-center">
-                      <h3 className="text-lg font-bold mb-1">{product.name}</h3>
-                      <p className="text-muted-foreground text-sm mb-3">{product.flavors.join(" • ")}</p>
+                      <h3 className="text-xl font-bold mb-4">{product.name}</h3>
                       
-                      <div className="flex justify-center gap-4 text-xs text-muted-foreground mb-4">
+                      <div className="flex justify-center gap-4 text-sm text-muted-foreground mb-6">
                         <span>{product.puffs} puffs</span>
                         <span>•</span>
                         <span>{product.nicotine} nicotina</span>
