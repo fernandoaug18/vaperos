@@ -65,7 +65,7 @@ const HQDProductsSection = () => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <div className="space-y-12 mb-12">
           {hqdProducts.map((product) => (
             <Card 
               key={product.id} 
@@ -75,15 +75,15 @@ const HQDProductsSection = () => {
               <CardContent className="p-0">
                 <div className="relative">
                   <div className={`absolute inset-0 bg-gradient-to-br ${product.color} opacity-10 group-hover:opacity-20 transition-opacity duration-300`} />
-                  <div className="p-6 relative">
-                    <div className="mb-6">
-                      <div className="grid grid-cols-3">
+                  <div className="p-8 relative">
+                    <div className="mb-8">
+                      <div className="grid grid-cols-3 max-w-4xl mx-auto">
                         {product.images.map((image, index) => (
-                          <div key={index} className="aspect-[4/5] flex items-center justify-center bg-white/5">
+                          <div key={index} className="aspect-[3/4] flex items-center justify-center bg-white/5">
                             <img 
                               src={image} 
                               alt={`${product.name} - ${product.flavors[index]}`}
-                              className="w-full h-full object-contain drop-shadow-lg group-hover:scale-105 transition-transform duration-300"
+                              className="w-full h-full object-contain drop-shadow-xl group-hover:scale-105 transition-transform duration-300"
                             />
                           </div>
                         ))}
@@ -91,21 +91,21 @@ const HQDProductsSection = () => {
                     </div>
                     
                     <div className="text-center">
-                      <h3 className="text-xl font-bold mb-4">{product.name}</h3>
+                      <h3 className="text-3xl font-bold mb-6">{product.name}</h3>
                       
-                      <div className="flex justify-center gap-4 text-sm text-muted-foreground mb-6">
-                        <span>{product.puffs} puffs</span>
+                      <div className="flex justify-center gap-6 text-lg text-muted-foreground mb-8">
+                        <span className="font-semibold">{product.puffs} puffs</span>
                         <span>•</span>
-                        <span>{product.nicotine} nicotina</span>
+                        <span className="font-semibold">{product.nicotine} nicotina</span>
                       </div>
                       
                       
                        <Button 
-                         className="w-full bg-sky-400 hover:bg-sky-300 text-white hover:text-gray-900 transition-all duration-300"
-                         size="sm"
+                         className="bg-sky-400 hover:bg-sky-300 text-white hover:text-gray-900 transition-all duration-300 px-8 py-4 text-lg"
+                         size="lg"
                          onClick={() => navigate(product.route)}
                        >
-                         <Eye className="w-4 h-4 mr-2" />
+                         <Eye className="w-5 h-5 mr-3" />
                          Conocer más
                        </Button>
                     </div>
