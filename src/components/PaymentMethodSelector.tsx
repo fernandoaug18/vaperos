@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { CreditCard, Building2, ArrowLeft, Smartphone } from "lucide-react";
+import { CreditCard, ArrowLeft, Smartphone } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { CartItem } from "@/hooks/useCart";
 import { useState } from "react";
@@ -80,53 +80,6 @@ export const PaymentMethodSelector = ({
     }
   };
 
-  const handleBankTransfer = async () => {
-    setLoading(true);
-    try {
-      console.log('Starting bank transfer with items:', items);
-      console.log('Total price:', total);
-      
-      const processedItems = items.map(item => ({
-        id: item.id,
-        name: item.name,
-        price: parseFloat(item.price.replace(/\./g, '')), // Handle Chilean format correctly
-        quantity: item.quantity
-      }));
-      
-      console.log('Processed items for bank transfer:', processedItems);
-      
-      const { data, error } = await supabase.functions.invoke('create-bank-transfer-order', {
-        body: { 
-          items: processedItems,
-          total: total
-        }
-      });
-
-      console.log('Bank transfer response:', data, error);
-
-      if (error) {
-        console.error('Bank transfer error:', error);
-        throw error;
-      }
-
-      toast({
-        title: "Orden Creada",
-        description: "Recibirás las instrucciones de transferencia por correo.",
-        duration: 5000
-      });
-
-      onOpenChange(false);
-    } catch (error) {
-      console.error('Bank transfer failed:', error);
-      toast({
-        title: "Error",
-        description: `No se pudo crear la orden: ${error.message || 'Error desconocido'}`,
-        variant: "destructive"
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleMercadoPagoPayment = async () => {
     setLoading(true);
@@ -223,29 +176,6 @@ export const PaymentMethodSelector = ({
                       <div className="font-medium">Tarjeta de Crédito/Débito</div>
                       <div className="text-sm text-muted-foreground">
                         Pago seguro con Stripe
-                      </div>
-                    </div>
-                  </div>
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="cursor-pointer hover:bg-accent transition-colors">
-              <CardContent className="p-4">
-                <Button 
-                  variant="ghost" 
-                  className="w-full justify-start h-auto p-0"
-                  onClick={handleBankTransfer}
-                  disabled={loading}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-secondary rounded-lg">
-                      <Building2 className="h-5 w-5 text-secondary-foreground" />
-                    </div>
-                    <div className="text-left">
-                      <div className="font-medium">Transferencia Bancaria</div>
-                      <div className="text-sm text-muted-foreground">
-                        Recibe instrucciones por correo
                       </div>
                     </div>
                   </div>
