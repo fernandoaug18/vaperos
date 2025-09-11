@@ -63,7 +63,7 @@ const HeroSection = () => {
               <div className="smoke-cloud smoke-5"></div>
             </div>
             
-            <h1 className="text-3xl sm:text-2xl md:text-7xl lg:text-9xl font-orbitron font-black mb-6 leading-none tracking-wider relative">
+            <h1 className="text-4xl sm:text-2xl md:text-7xl lg:text-9xl font-orbitron font-black mb-6 leading-none tracking-wider relative">
               <span className="vapor-text">VAPEROS</span>
             </h1>
           </div>

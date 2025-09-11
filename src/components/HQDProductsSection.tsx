@@ -122,7 +122,7 @@ const HQDProductsSection = () => {
             <img 
               src="/lovable-uploads/0c3b6ae8-e7a3-4107-8b83-f2e36199b781.png" 
               alt="HQD Display"
-              className="max-w-sm mx-auto md:mx-auto sm:ml-4 rounded-xl shadow-elegant"
+              className="max-w-xs mx-auto rounded-xl shadow-elegant"
             />
             <div className="absolute inset-0 bg-gradient-primary opacity-20 rounded-xl" />
           </div>
