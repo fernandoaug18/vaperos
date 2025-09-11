@@ -132,14 +132,6 @@ const CuviePlus = () => {
             </div>
 
             <div className="text-3xl font-bold text-white mb-6">${product.price}</div>
-            <Button 
-              className="w-full bg-sky-400 hover:bg-sky-300 text-white hover:text-gray-900 transition-all duration-300"
-              size="lg"
-              onClick={() => addToCart({...product, flavor: "Green Apple Ice", color: "from-green-500 to-emerald-400"})}
-            >
-              <ShoppingCart className="w-5 h-5 mr-2" />
-              Agregar al Carrito
-            </Button>
           </div>
         </div>
 
@@ -164,12 +156,12 @@ const CuviePlus = () => {
                       <h3 className="text-lg font-bold mb-2">{flavor.name}</h3>
                       <p className="text-sm text-muted-foreground mb-4">{flavor.description}</p>
                       <Button 
-                        className="w-full bg-sky-400 hover:bg-sky-300 text-white hover:text-gray-900 transition-all duration-300"
+                        className="w-auto px-4 bg-sky-400 hover:bg-sky-300 text-white hover:text-gray-900 transition-all duration-300"
                         size="sm"
                         onClick={() => addToCart({...product, flavor: flavor.name, color: flavor.color})}
                       >
                         <ShoppingCart className="w-4 h-4 mr-2" />
-                        Agregar {flavor.name}
+                        Agregar
                       </Button>
                     </div>
                   </div>
