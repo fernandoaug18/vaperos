@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Eye, Star } from "lucide-react";
 import { useCart } from "@/hooks/useCart";
 import { useNavigate } from "react-router-dom";
+import VideoCarousel from "@/components/VideoCarousel";
 
 const HQDProductsSection = () => {
   const { addToCart } = useCart();
@@ -116,6 +117,8 @@ const HQDProductsSection = () => {
             </Card>
           ))}
         </div>
+
+        <VideoCarousel />
 
         <div className="text-center">
           <div className="relative inline-block">
