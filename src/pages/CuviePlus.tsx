@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useCart } from "@/hooks/useCart";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const CuviePlus = () => {
   const { addToCart } = useCart();
@@ -180,6 +181,7 @@ const CuviePlus = () => {
       </div>
 
       <Footer />
+      <WhatsAppButton />
     </div>
   );
 };
