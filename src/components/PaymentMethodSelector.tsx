@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { CreditCard, ArrowLeft, Smartphone } from "lucide-react";
+import { ArrowLeft, Smartphone } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { CartItem } from "@/hooks/useCart";
 import { useState } from "react";
@@ -32,54 +32,6 @@ export const PaymentMethodSelector = ({
       minimumFractionDigits: 0
     }).format(price);
   };
-
-  const handleStripePayment = async () => {
-    setLoading(true);
-    try {
-      console.log('Starting payment with items:', items);
-      console.log('Total price:', total);
-      
-      const processedItems = items.map(item => ({
-        id: item.id,
-        name: item.name,
-        price: parseFloat(item.price.replace(/\./g, '')), // Handle Chilean format correctly
-        quantity: item.quantity
-      }));
-      
-      console.log('Processed items for payment:', processedItems);
-      
-      const { data, error } = await supabase.functions.invoke('create-payment', {
-        body: { 
-          items: processedItems,
-          total: total
-        }
-      });
-
-      console.log('Payment response:', data, error);
-
-      if (error) {
-        console.error('Payment error:', error);
-        throw error;
-      }
-
-      if (data?.url) {
-        console.log('Redirecting to Stripe:', data.url);
-        window.open(data.url, '_blank');
-      } else {
-        throw new Error('No payment URL received');
-      }
-    } catch (error) {
-      console.error('Payment failed:', error);
-      toast({
-        title: "Error",
-        description: `No se pudo procesar el pago: ${error.message || 'Error desconocido'}`,
-        variant: "destructive"
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
 
   const handleMercadoPagoPayment = async () => {
     setLoading(true);
@@ -160,29 +112,6 @@ export const PaymentMethodSelector = ({
           <div className="space-y-3">
             <h3 className="font-medium">Selecciona tu método de pago:</h3>
             
-            <Card className="cursor-pointer hover:bg-accent transition-colors">
-              <CardContent className="p-4">
-                <Button 
-                  variant="ghost" 
-                  className="w-full justify-start h-auto p-0"
-                  onClick={handleStripePayment}
-                  disabled={loading}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-primary rounded-lg">
-                      <CreditCard className="h-5 w-5 text-primary-foreground" />
-                    </div>
-                    <div className="text-left">
-                      <div className="font-medium">Tarjeta de Crédito/Débito</div>
-                      <div className="text-sm text-muted-foreground">
-                        Pago seguro con Stripe
-                      </div>
-                    </div>
-                  </div>
-                </Button>
-              </CardContent>
-            </Card>
-
             <Card className="cursor-pointer hover:bg-accent transition-colors">
               <CardContent className="p-4">
                 <Button 
