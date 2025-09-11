@@ -48,10 +48,10 @@ const VideoCarousel = () => {
 
   return (
     <section className="py-12 px-4">
-      <div className="container mx-auto max-w-4xl">
+      <div className="container mx-auto max-w-6xl">
         <div className="relative">
           <Card className="bg-card/50 backdrop-blur-sm border-border/50 overflow-hidden">
-            <div className="relative aspect-video md:aspect-video aspect-[9/16] md:aspect-[16/9]">
+            <div className="relative aspect-[4/3] md:aspect-video w-full min-h-[300px] md:min-h-[400px]">
               <video
                 id={`video-${currentVideo}`}
                 src={videos[currentVideo].src}
