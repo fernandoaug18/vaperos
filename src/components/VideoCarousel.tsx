@@ -1,11 +1,10 @@
-import { useState } from "react";
-import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 const VideoCarousel = () => {
   const [currentVideo, setCurrentVideo] = useState(0);
-  const [isPlaying, setIsPlaying] = useState<boolean[]>([false, false]);
 
   const videos = [
     {
@@ -18,25 +17,13 @@ const VideoCarousel = () => {
     }
   ];
 
-  const togglePlay = (index: number) => {
-    const video = document.getElementById(`video-${index}`) as HTMLVideoElement;
+  useEffect(() => {
+    const video = document.getElementById(`video-${currentVideo}`) as HTMLVideoElement;
     if (video) {
-      if (isPlaying[index]) {
-        video.pause();
-      } else {
-        video.play();
-      }
-      const newIsPlaying = [...isPlaying];
-      newIsPlaying[index] = !isPlaying[index];
-      setIsPlaying(newIsPlaying);
+      video.load();
+      video.play().catch(console.log);
     }
-  };
-
-  const handleVideoEnded = (index: number) => {
-    const newIsPlaying = [...isPlaying];
-    newIsPlaying[index] = false;
-    setIsPlaying(newIsPlaying);
-  };
+  }, [currentVideo]);
 
   const goToPrevious = () => {
     setCurrentVideo((prev) => (prev === 0 ? videos.length - 1 : prev - 1));
@@ -48,20 +35,21 @@ const VideoCarousel = () => {
 
   return (
     <section className="py-12 px-4">
-      <div className="container mx-auto max-w-6xl">
-        <div className="relative">
+      <div className="container mx-auto">
+        <div className="relative max-w-xs md:max-w-4xl mx-auto">
           <Card className="bg-card/50 backdrop-blur-sm border-border/50 overflow-hidden">
-            <div className="relative aspect-[4/3] md:aspect-video w-full h-[400px] md:h-[500px]">
+            <div className="relative aspect-video w-full">
               <video
+                key={currentVideo}
                 id={`video-${currentVideo}`}
                 src={videos[currentVideo].src}
                 className="w-full h-full object-cover"
-                onEnded={() => handleVideoEnded(currentVideo)}
                 controls={false}
                 playsInline
                 muted
                 autoPlay
                 loop
+                preload="auto"
               />
               
               {/* Navigation Arrows */}
