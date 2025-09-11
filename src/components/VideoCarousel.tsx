@@ -13,7 +13,7 @@ const VideoCarousel = () => {
       title: "Video 1"
     },
     {
-      src: "/videos/hero-video.mp4", // Using existing video as placeholder for second video
+      src: "/videos/video2.mp4",
       title: "Video 2"
     }
   ];
@@ -51,7 +51,7 @@ const VideoCarousel = () => {
       <div className="container mx-auto max-w-4xl">
         <div className="relative">
           <Card className="bg-card/50 backdrop-blur-sm border-border/50 overflow-hidden">
-            <div className="relative aspect-video">
+            <div className="relative aspect-video md:aspect-video aspect-[9/16] md:aspect-[16/9]">
               <video
                 id={`video-${currentVideo}`}
                 src={videos[currentVideo].src}
@@ -60,6 +60,8 @@ const VideoCarousel = () => {
                 controls={false}
                 playsInline
                 muted
+                autoPlay
+                loop
               />
               
               {/* Play/Pause Overlay */}
