@@ -63,7 +63,7 @@ const HeroSection = () => {
               <div className="smoke-cloud smoke-5"></div>
             </div>
             
-            <h1 className="text-4xl sm:text-2xl md:text-7xl lg:text-9xl font-orbitron font-black mb-6 leading-none tracking-wider relative">
+            <h1 className="text-5xl sm:text-2xl md:text-7xl lg:text-9xl font-orbitron font-black mb-6 leading-none tracking-wider relative">
               <span className="vapor-text">VAPEROS</span>
             </h1>
           </div>
@@ -78,7 +78,7 @@ const HeroSection = () => {
           <div className="flex justify-center mb-16">
             <Button 
               size="lg" 
-              className="bg-sky-400 hover:bg-sky-300 text-white hover:text-gray-900 transition-all duration-300 text-xl font-bold px-12 py-6 rounded-2xl"
+              className="bg-sky-400 hover:bg-sky-300 text-white hover:text-gray-900 transition-all duration-300 text-base md:text-xl font-bold px-8 md:px-12 py-4 md:py-6 rounded-2xl"
               onClick={() => {
                 document.getElementById('productos-hqd')?.scrollIntoView({ 
                   behavior: 'smooth', 
