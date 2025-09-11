@@ -48,7 +48,7 @@ const VideoCarousel = () => {
   return (
     <section className="py-12 px-4">
       <div className="container mx-auto">
-        <div className="relative inline-block max-w-xs md:max-w-4xl mx-auto w-full">
+        <div className="relative max-w-xs md:max-w-2xl mx-auto">
           <Card className="bg-card/50 backdrop-blur-sm border-border/50 overflow-hidden">
             <div className="relative aspect-video w-full">
               <video
