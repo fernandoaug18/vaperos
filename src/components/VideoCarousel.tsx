@@ -9,11 +9,11 @@ const VideoCarousel = () => {
 
   const videos = [
     {
-      src: "/videos/video1.mp4",
+      src: "/videos/video2.mp4",
       title: "Video 1"
     },
     {
-      src: "/videos/video2.mp4",
+      src: "/videos/video1.mp4", 
       title: "Video 2"
     }
   ];
@@ -51,7 +51,7 @@ const VideoCarousel = () => {
       <div className="container mx-auto max-w-6xl">
         <div className="relative">
           <Card className="bg-card/50 backdrop-blur-sm border-border/50 overflow-hidden">
-            <div className="relative aspect-[4/3] md:aspect-video w-full min-h-[300px] md:min-h-[400px]">
+            <div className="relative aspect-[4/3] md:aspect-video w-full h-[400px] md:h-[500px]">
               <video
                 id={`video-${currentVideo}`}
                 src={videos[currentVideo].src}
@@ -64,22 +64,6 @@ const VideoCarousel = () => {
                 loop
               />
               
-              {/* Play/Pause Overlay */}
-              <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  className="bg-white/20 backdrop-blur-sm hover:bg-white/30"
-                  onClick={() => togglePlay(currentVideo)}
-                >
-                  {isPlaying[currentVideo] ? (
-                    <Pause className="w-8 h-8" />
-                  ) : (
-                    <Play className="w-8 h-8" />
-                  )}
-                </Button>
-              </div>
-
               {/* Navigation Arrows */}
               {videos.length > 1 && (
                 <>
