@@ -8,7 +8,7 @@ const VideoCarousel = () => {
 
   const videos = [
     {
-      src: "/videos/video2.mp4",
+      src: "/videos/new-video.mp4",
       title: "Video 1"
     },
     {
