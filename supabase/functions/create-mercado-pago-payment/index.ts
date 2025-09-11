@@ -35,7 +35,7 @@ serve(async (req) => {
     // Create payment preference for Mercado Pago
     const preferenceData = {
       items: items.map(item => ({
-        title: item.name,
+        title: item.flavor ? `${item.name} - ${item.flavor}` : item.name,
         quantity: item.quantity,
         unit_price: item.price,
         currency_id: 'CLP'
@@ -109,7 +109,7 @@ serve(async (req) => {
         .from('orders')
         .insert({
           user_id: userId,
-          total_amount: total,
+          total: total,
           status: 'pending',
           payment_method: 'mercado_pago',
           payment_intent_id: preference.id
@@ -120,13 +120,15 @@ serve(async (req) => {
       if (orderError) {
         console.error('Error creating order:', orderError);
       } else if (order) {
-        // Insert order items
+        // Insert order items with flavor and color information
         const orderItems = items.map(item => ({
           order_id: order.id,
-          product_name: item.name,
+          product_id: item.id.toString(),
+          name: item.name,
           quantity: item.quantity,
           price: item.price,
-          subtotal: item.price * item.quantity
+          flavor: item.flavor || null,
+          product_color: item.color || null
         }));
 
         const { error: itemsError } = await supabaseServiceClient

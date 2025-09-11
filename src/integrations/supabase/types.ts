@@ -17,28 +17,34 @@ export type Database = {
       order_items: {
         Row: {
           created_at: string
+          flavor: string | null
           id: string
           name: string
           order_id: string
           price: number
+          product_color: string | null
           product_id: string
           quantity: number
         }
         Insert: {
           created_at?: string
+          flavor?: string | null
           id?: string
           name: string
           order_id: string
           price: number
+          product_color?: string | null
           product_id: string
           quantity?: number
         }
         Update: {
           created_at?: string
+          flavor?: string | null
           id?: string
           name?: string
           order_id?: string
           price?: number
+          product_color?: string | null
           product_id?: string
           quantity?: number
         }
@@ -57,6 +63,7 @@ export type Database = {
           bank_transfer_reference: string | null
           created_at: string
           id: string
+          payment_intent_id: string | null
           payment_method: string | null
           status: string
           stripe_session_id: string | null
@@ -68,6 +75,7 @@ export type Database = {
           bank_transfer_reference?: string | null
           created_at?: string
           id?: string
+          payment_intent_id?: string | null
           payment_method?: string | null
           status?: string
           stripe_session_id?: string | null
@@ -79,6 +87,7 @@ export type Database = {
           bank_transfer_reference?: string | null
           created_at?: string
           id?: string
+          payment_intent_id?: string | null
           payment_method?: string | null
           status?: string
           stripe_session_id?: string | null
