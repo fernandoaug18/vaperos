@@ -20,8 +20,20 @@ const VideoCarousel = () => {
   useEffect(() => {
     const video = document.getElementById(`video-${currentVideo}`) as HTMLVideoElement;
     if (video) {
-      video.load();
-      video.play().catch(console.log);
+      const playVideo = async () => {
+        try {
+          video.load();
+          await new Promise(resolve => {
+            video.addEventListener('loadeddata', resolve, { once: true });
+          });
+          await video.play();
+        } catch (error) {
+          console.log('Video play failed:', error);
+        }
+      };
+      
+      // Small delay to ensure element is rendered
+      setTimeout(playVideo, 100);
     }
   }, [currentVideo]);
 
@@ -40,17 +52,24 @@ const VideoCarousel = () => {
           <Card className="bg-card/50 backdrop-blur-sm border-border/50 overflow-hidden">
             <div className="relative aspect-video w-full">
               <video
-                key={currentVideo}
+                key={`video-${currentVideo}-${videos[currentVideo].src}`}
                 id={`video-${currentVideo}`}
-                src={videos[currentVideo].src}
                 className="w-full h-full object-cover"
                 controls={false}
                 playsInline
                 muted
                 autoPlay
                 loop
-                preload="auto"
-              />
+                preload="metadata"
+                onLoadedData={(e) => {
+                  const video = e.target as HTMLVideoElement;
+                  video.play().catch(console.log);
+                }}
+                onError={(e) => console.log('Video error:', e)}
+              >
+                <source src={videos[currentVideo].src} type="video/mp4" />
+                Tu navegador no soporta el elemento video.
+              </video>
               
               {/* Navigation Arrows */}
               {videos.length > 1 && (
