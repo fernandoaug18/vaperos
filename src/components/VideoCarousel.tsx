@@ -48,7 +48,7 @@ const VideoCarousel = () => {
   return (
     <section className="py-12 px-4">
       <div className="container mx-auto">
-        <div className="relative max-w-xs md:max-w-4xl mx-auto">
+        <div className="relative inline-block max-w-xs md:max-w-4xl mx-auto w-full">
           <Card className="bg-card/50 backdrop-blur-sm border-border/50 overflow-hidden">
             <div className="relative aspect-video w-full">
               <video
@@ -65,7 +65,7 @@ const VideoCarousel = () => {
                   const video = e.target as HTMLVideoElement;
                   video.play().catch(console.log);
                 }}
-                onError={(e) => console.log('Video error:', e)}
+                onError={() => goToNext()}
               >
                 <source src={videos[currentVideo].src} type="video/mp4" />
                 Tu navegador no soporta el elemento video.
