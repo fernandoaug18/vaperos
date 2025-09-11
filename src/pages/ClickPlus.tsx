@@ -160,9 +160,17 @@ const ClickPlus = () => {
                         className="w-full h-full object-contain drop-shadow-lg group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>
-                    <div>
+                    <div className="flex-1">
                       <h3 className="text-lg font-bold mb-2">{flavor.name}</h3>
-                      <p className="text-sm text-muted-foreground">{flavor.description}</p>
+                      <p className="text-sm text-muted-foreground mb-4">{flavor.description}</p>
+                      <Button 
+                        className="w-full bg-sky-400 hover:bg-sky-300 text-white hover:text-gray-900 transition-all duration-300"
+                        size="sm"
+                        onClick={() => addToCart({...product, flavor: flavor.name, color: flavor.color})}
+                      >
+                        <ShoppingCart className="w-4 h-4 mr-2" />
+                        Agregar {flavor.name}
+                      </Button>
                     </div>
                   </div>
                 </CardContent>
