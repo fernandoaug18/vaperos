@@ -42,6 +42,8 @@ export const PaymentMethodSelector = ({
       const processedItems = items.map(item => ({
         id: item.id,
         name: item.name,
+        flavor: item.flavor,
+        color: item.color,
         price: parseFloat(item.price.replace(/\./g, '')), // Handle Chilean format correctly
         quantity: item.quantity
       }));
@@ -98,7 +100,9 @@ export const PaymentMethodSelector = ({
             <div className="space-y-1 text-sm">
               {items.map((item) => (
                 <div key={item.id} className="flex justify-between">
-                  <span>{item.name} x{item.quantity}</span>
+                  <span>
+                    {item.name} - {item.flavor} x{item.quantity}
+                  </span>
                   <span>${parseFloat(item.price.replace(/\./g, '')) * item.quantity}</span>
                 </div>
               ))}
