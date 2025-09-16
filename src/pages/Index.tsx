@@ -7,8 +7,15 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import Header from "@/components/Header";
 import AgeVerification from "@/components/AgeVerification";
 const Index = () => {
-  const [isAgeVerified, setIsAgeVerified] = useState(true);
+  const [isAgeVerified, setIsAgeVerified] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const verified = localStorage.getItem('ageVerified');
+    if (verified === 'true') {
+      setIsAgeVerified(true);
+    }
+  }, []);
 
   const handleAgeVerified = () => {
     setIsAgeVerified(true);
