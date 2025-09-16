@@ -11,7 +11,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const verified = localStorage.getItem('ageVerified');
+    const verified = sessionStorage.getItem('ageVerified');
     if (verified === 'true') {
       setIsAgeVerified(true);
     }

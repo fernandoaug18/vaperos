@@ -9,7 +9,7 @@ const AgeVerification = ({ onVerified }: AgeVerificationProps) => {
   const [showUnderageMessage, setShowUnderageMessage] = useState(false);
 
   const handleOver18 = () => {
-    localStorage.setItem('ageVerified', 'true');
+    sessionStorage.setItem('ageVerified', 'true');
     onVerified();
   };
 
