@@ -127,12 +127,12 @@ export const CartDrawer = () => {
               </div>
 
               <div className="border-t pt-4 space-y-4">
-                <CouponInput
-                  onApplyCoupon={applyCoupon}
-                  onRemoveCoupon={removeCoupon}
-                  appliedCoupon={appliedCoupon}
-                  discount={discountPercentage}
-                />
+          <CouponInput 
+            onApplyCoupon={applyCoupon}
+            onRemoveCoupon={removeCoupon}
+            appliedCoupon={appliedCoupon}
+            discountPercentage={discountPercentage}
+          />
                 
                 <Separator />
                 

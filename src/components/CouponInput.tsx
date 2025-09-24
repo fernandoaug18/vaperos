@@ -16,14 +16,14 @@ interface CouponInputProps {
   onApplyCoupon: (coupon: string) => boolean;
   onRemoveCoupon: () => void;
   appliedCoupon: string | null;
-  discount: number;
+  discountPercentage: number;
 }
 
 export const CouponInput = ({ 
   onApplyCoupon, 
   onRemoveCoupon, 
   appliedCoupon, 
-  discount 
+  discountPercentage 
 }: CouponInputProps) => {
   const [couponCode, setCouponCode] = useState("");
   const [isApplying, setIsApplying] = useState(false);
@@ -39,7 +39,7 @@ export const CouponInput = ({
       if (success) {
         toast({
           title: "¡Cupón aplicado!",
-          description: `Descuento del ${discount}% aplicado exitosamente`,
+          description: `Descuento del 20% aplicado exitosamente`,
         });
         setCouponCode("");
       } else {
@@ -86,7 +86,7 @@ export const CouponInput = ({
               {appliedCoupon.toUpperCase()}
             </Badge>
             <span className="text-sm text-green-700">
-              -{discount}% de descuento
+              -{discountPercentage}% de descuento
             </span>
           </div>
         </div>

@@ -74,39 +74,67 @@ export const PaymentMethodSelector = ({
   const handleMercadoPagoPayment = async () => {
     setLoading(true);
     try {
-      // Crear descripción del pedido
-      const itemsDescription = items.map(item => 
-        `${item.name} - ${item.flavor} (x${item.quantity})`
-      ).join(', ');
-      
-      const discountText = appliedCoupon ? ` con descuento ${appliedCoupon.toUpperCase()} (-${discountPercentage}%)` : '';
-      const description = `Pedido Vaperos: ${itemsDescription}${discountText}`;
-      
-      // Usar Mercado Pago Link (no requiere backend)
-      // Creamos los parámetros para el enlace de pago
-      const params = new URLSearchParams({
-        'title': 'Pedido Vaperos',
-        'price': total.toString(),
-        'quantity': '1',
-        'currency': 'CLP',
-        'description': description,
-        'external_reference': `pedido-${Date.now()}`,
-        'back_urls.success': `${window.location.origin}/payment-success`,
-        'back_urls.failure': `${window.location.origin}/payment-cancelled`,
-        'back_urls.pending': `${window.location.origin}/payment-pending`
+      // Preparar los items para Mercado Pago
+      const mpItems = items.map(item => ({
+        title: `${item.name} - ${item.flavor}`,
+        quantity: item.quantity,
+        unit_price: parseFloat(item.price.replace(/\./g, '')),
+        currency_id: 'CLP'
+      }));
+
+      // Crear la preferencia de pago con el precio con descuento aplicado
+      const preference = {
+        items: [
+          {
+            title: 'Pedido Vaperos',
+            quantity: 1,
+            unit_price: total, // Este ya viene con el descuento aplicado
+            currency_id: 'CLP',
+            description: `Pedido de ${items.length} producto(s)${appliedCoupon ? ` con descuento ${appliedCoupon.toUpperCase()} (-${discountPercentage}%)` : ''}`
+          }
+        ],
+        back_urls: {
+          success: `${window.location.origin}/payment-success`,
+          failure: `${window.location.origin}/payment-cancelled`,
+          pending: `${window.location.origin}/payment-pending`
+        },
+        auto_return: 'approved',
+        external_reference: `pedido-${Date.now()}`,
+        metadata: {
+          applied_coupon: appliedCoupon,
+          discount_percentage: discountPercentage,
+          original_subtotal: subtotal,
+          discount_amount: discount,
+          final_total: total
+        }
+      };
+
+      // Crear preferencia usando el Access Token
+      const response = await fetch('https://api.mercadopago.com/checkout/preferences', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer APP_USR-4714345607038986-091113-e77f3d9fc9c788e194677adc073ad4ba-2686457998'
+        },
+        body: JSON.stringify(preference)
       });
 
-      // URL de Mercado Pago Link
-      const mercadoPagoUrl = `https://www.mercadopago.cl/checkout/v1/payment?${params.toString()}`;
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error de Mercado Pago:', errorData);
+        throw new Error('Error al crear la preferencia de pago');
+      }
+
+      const data = await response.json();
       
       toast({
         title: "Redirigiendo a Mercado Pago",
         description: "Te estamos llevando a completar tu pago de forma segura.",
       });
       
-      // Redirigir después de un pequeño delay para mostrar el mensaje
+      // Redirigir al checkout de Mercado Pago con un pequeño delay
       setTimeout(() => {
-        window.location.href = mercadoPagoUrl;
+        window.location.href = data.init_point;
       }, 1500);
       
     } catch (error) {
