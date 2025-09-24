@@ -44,94 +44,54 @@ export const PaymentMethodSelector = ({
   const handleMercadoPagoPayment = async () => {
     setLoading(true);
     try {
-      console.log('Starting Mercado Pago payment with items:', items);
-      console.log('Total price:', total);
+      // Para una solución frontend-only, necesitamos configurar Mercado Pago correctamente
+      // Opción 1: Usando el SDK de Mercado Pago (recomendado)
       
-      // Crear preferencia de pago directamente con Mercado Pago
-      const preference = {
-        items: appliedCoupon ? [
-          // Si hay descuento, crear un solo ítem con el total con descuento
-          {
-            id: 'discount-order',
-            title: `Pedido Vaperos${appliedCoupon ? ` (${appliedCoupon.toUpperCase()} -${discountPercentage}%)` : ''}`,
-            unit_price: Math.round(total),
-            quantity: 1,
-            currency_id: 'CLP'
-          }
-        ] : items.map(item => ({
-          // Sin descuento, usar precios originales
-          id: item.id,
-          title: `${item.name} - ${item.flavor || ''}`,
-          unit_price: parseFloat(item.price.replace(/\./g, '')),
-          quantity: item.quantity,
-          currency_id: 'CLP'
-        })),
-        payer: {
-          email: 'test_user@test.com' // Email por defecto
-        },
-        back_urls: {
-          success: `${window.location.origin}/payment-success`,
-          failure: `${window.location.origin}/payment-cancelled`,
-          pending: `${window.location.origin}/payment-cancelled`
-        },
-        auto_return: 'approved',
-        payment_methods: {
-          excluded_payment_types: [],
-          excluded_payment_methods: [],
-          installments: 12
-        },
-        notification_url: `${window.location.origin}/webhooks/mercadopago`,
-        statement_descriptor: 'VAPEROS',
-        metadata: {
-          order_details: JSON.stringify({
-            items: items.map(item => ({
-              id: item.id,
-              name: item.name,
-              flavor: item.flavor,
-              quantity: item.quantity,
-              unit_price: parseFloat(item.price.replace(/\./g, ''))
-            })),
-            subtotal: Math.round(subtotal),
-            ...(appliedCoupon && {
-              coupon_code: appliedCoupon,
-              discount_percentage: discountPercentage,
-              discount_amount: Math.round(discount)
-            }),
-            total: Math.round(total)
-          })
-        }
-      };
-
-      // IMPORTANTE: Reemplaza este token de prueba con tu Access Token real de Mercado Pago
-      // Puedes obtener tu token en: https://www.mercadopago.cl/developers/panel/app
-      // Para producción, mantén este token seguro como variable de entorno
-      const accessToken = 'TEST-2441634409951788-092414-c47bf38509948b7e86bb9c5da1c6a7a8-191897312'; // Token de prueba
+      // Por ahora, como solución temporal, crearemos un enlace de pago directo
+      // IMPORTANTE: Para producción necesitas configurar un backend o usar Mercado Pago Link
       
-      const response = await fetch('https://api.mercadopago.com/checkout/preferences', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`
-        },
-        body: JSON.stringify(preference)
+      const itemsDescription = items.map(item => 
+        `${item.name} - ${item.flavor} (x${item.quantity})`
+      ).join(', ');
+      
+      const discountText = appliedCoupon ? ` con descuento ${appliedCoupon.toUpperCase()} (-${discountPercentage}%)` : '';
+      const description = `Pedido Vaperos: ${itemsDescription}${discountText}`;
+      
+      // Crear un enlace de pago usando Mercado Pago Link (solución simple)
+      // Reemplaza 'TU_USUARIO_MP' con tu usuario de Mercado Pago
+      const mercadoPagoLink = `https://www.mercadopago.cl/checkout/v1/redirect?pref_id=DEMO`;
+      
+      // Como alternativa temporal, mostrar información del pedido y sugerir contacto
+      toast({
+        title: "Información de Pago",
+        description: "Para completar tu compra, contáctanos por WhatsApp con los detalles de tu pedido.",
       });
-
-      const data = await response.json();
       
-      if (data.init_point) {
-        window.open(data.init_point, '_blank');
-        toast({
-          title: "Éxito",
-          description: "Redirigiendo a Mercado Pago...",
-        });
-      } else {
-        throw new Error('No se pudo crear la preferencia de pago');
-      }
+      // Crear mensaje para WhatsApp con los detalles del pedido
+      const whatsappMessage = encodeURIComponent(
+        `🛒 *Nuevo Pedido Vaperos*\n\n` +
+        `📦 *Productos:*\n` +
+        items.map(item => 
+          `• ${item.name} - ${item.flavor} x${item.quantity} = $${(parseFloat(item.price.replace(/\./g, '')) * item.quantity).toLocaleString('es-CL')}`
+        ).join('\n') +
+        `\n\n💰 *Resumen:*\n` +
+        `Subtotal: $${subtotal.toLocaleString('es-CL')}\n` +
+        (appliedCoupon ? `Descuento (${appliedCoupon.toUpperCase()} -${discountPercentage}%): -$${discount.toLocaleString('es-CL')}\n` : '') +
+        `*Total: $${total.toLocaleString('es-CL')}*\n\n` +
+        `✅ Confirma tu pedido y coordinaremos el pago y entrega.`
+      );
+      
+      // Reemplaza este número con tu número de WhatsApp Business
+      const whatsappNumber = '56912345678'; // Formato: código país + número sin +
+      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+      
+      window.open(whatsappUrl, '_blank');
+      
     } catch (error) {
-      console.error('Mercado Pago payment failed:', error);
+      console.error('Error al procesar el pedido:', error);
       toast({
         title: "Error",
-        description: `No se pudo procesar el pago: ${error.message || 'Error desconocido'}`,
+        description: "Ocurrió un error al procesar tu pedido. Por favor intenta nuevamente.",
         variant: "destructive"
       });
     } finally {
@@ -197,13 +157,13 @@ export const PaymentMethodSelector = ({
                   disabled={loading}
                 >
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-blue-500 rounded-lg">
+                    <div className="p-2 bg-green-500 rounded-lg">
                       <Smartphone className="h-5 w-5 text-white" />
                     </div>
                     <div className="text-left">
-                      <div className="font-medium">Mercado Pago</div>
+                      <div className="font-medium">Pagar por WhatsApp</div>
                       <div className="text-sm text-muted-foreground">
-                        Paga con Mercado Pago
+                        Envía tu pedido y coordina el pago
                       </div>
                     </div>
                   </div>
