@@ -23,15 +23,28 @@ interface CartContextType {
   clearCart: () => void;
   getTotalItems: () => number;
   getTotalPrice: () => number;
+  getSubtotal: () => number;
+  getDiscountAmount: () => number;
+  applyCoupon: (coupon: string) => boolean;
+  removeCoupon: () => void;
+  appliedCoupon: string | null;
+  discountPercentage: number;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
+// Valid coupons configuration
+const VALID_COUPONS = {
+  'vaperos20': 20 // 20% discount
+};
+
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
+  const [discountPercentage, setDiscountPercentage] = useState(0);
 
   const addToCart = (product: Product) => {
     console.log('Adding product to cart:', product);
@@ -72,19 +85,46 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const clearCart = () => {
     setItems([]);
+    setAppliedCoupon(null);
+    setDiscountPercentage(0);
   };
 
   const getTotalItems = () => {
     return items.reduce((total, item) => total + item.quantity, 0);
   };
 
-  const getTotalPrice = () => {
+  const getSubtotal = () => {
     return items.reduce((total, item) => {
       // Parse Chilean price format (e.g., "12.000" -> 12000)
       const price = parseFloat(item.price.replace(/\./g, ''));
-      console.log('Parsing price:', item.price, '-> ', price, 'for item:', item.name);
       return total + (price * item.quantity);
     }, 0);
+  };
+
+  const getDiscountAmount = () => {
+    const subtotal = getSubtotal();
+    return subtotal * (discountPercentage / 100);
+  };
+
+  const getTotalPrice = () => {
+    const subtotal = getSubtotal();
+    const discount = getDiscountAmount();
+    return subtotal - discount;
+  };
+
+  const applyCoupon = (coupon: string): boolean => {
+    const discount = VALID_COUPONS[coupon.toLowerCase()];
+    if (discount) {
+      setAppliedCoupon(coupon.toLowerCase());
+      setDiscountPercentage(discount);
+      return true;
+    }
+    return false;
+  };
+
+  const removeCoupon = () => {
+    setAppliedCoupon(null);
+    setDiscountPercentage(0);
   };
 
   return (
@@ -96,6 +136,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       clearCart,
       getTotalItems,
       getTotalPrice,
+      getSubtotal,
+      getDiscountAmount,
+      applyCoupon,
+      removeCoupon,
+      appliedCoupon,
+      discountPercentage,
       isOpen,
       setIsOpen
     }}>

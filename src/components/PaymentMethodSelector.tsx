@@ -9,6 +9,10 @@ import { useToast } from "@/hooks/use-toast";
 
 interface PaymentMethodSelectorProps {
   total: number;
+  subtotal: number;
+  discount: number;
+  appliedCoupon: string | null;
+  discountPercentage: number;
   items: CartItem[];
   onBack: () => void;
   isOpen: boolean;
@@ -16,7 +20,11 @@ interface PaymentMethodSelectorProps {
 }
 
 export const PaymentMethodSelector = ({ 
-  total, 
+  total,
+  subtotal,
+  discount,
+  appliedCoupon,
+  discountPercentage,
   items, 
   onBack, 
   isOpen, 
@@ -41,7 +49,17 @@ export const PaymentMethodSelector = ({
       
       // Crear preferencia de pago directamente con Mercado Pago
       const preference = {
-        items: items.map(item => ({
+        items: appliedCoupon ? [
+          // Si hay descuento, crear un solo ítem con el total con descuento
+          {
+            id: 'discount-order',
+            title: `Pedido Vaperos${appliedCoupon ? ` (${appliedCoupon.toUpperCase()} -${discountPercentage}%)` : ''}`,
+            unit_price: Math.round(total),
+            quantity: 1,
+            currency_id: 'CLP'
+          }
+        ] : items.map(item => ({
+          // Sin descuento, usar precios originales
           id: item.id,
           title: `${item.name} - ${item.flavor || ''}`,
           unit_price: parseFloat(item.price.replace(/\./g, '')),
@@ -63,7 +81,25 @@ export const PaymentMethodSelector = ({
           installments: 12
         },
         notification_url: `${window.location.origin}/webhooks/mercadopago`,
-        statement_descriptor: 'VAPEROS'
+        statement_descriptor: 'VAPEROS',
+        metadata: {
+          order_details: JSON.stringify({
+            items: items.map(item => ({
+              id: item.id,
+              name: item.name,
+              flavor: item.flavor,
+              quantity: item.quantity,
+              unit_price: parseFloat(item.price.replace(/\./g, ''))
+            })),
+            subtotal: Math.round(subtotal),
+            ...(appliedCoupon && {
+              coupon_code: appliedCoupon,
+              discount_percentage: discountPercentage,
+              discount_amount: Math.round(discount)
+            }),
+            total: Math.round(total)
+          })
+        }
       };
 
       // IMPORTANTE: Reemplaza este token de prueba con tu Access Token real de Mercado Pago
@@ -128,9 +164,24 @@ export const PaymentMethodSelector = ({
                 </div>
               ))}
             </div>
-            <div className="border-t mt-2 pt-2 flex justify-between font-semibold">
-              <span>Total:</span>
-              <span>{formatPrice(total)}</span>
+            
+            <div className="border-t mt-3 pt-2 space-y-1">
+              <div className="flex justify-between text-sm">
+                <span>Subtotal:</span>
+                <span>{formatPrice(subtotal)}</span>
+              </div>
+              
+              {appliedCoupon && (
+                <div className="flex justify-between text-sm text-green-600">
+                  <span>Descuento ({discountPercentage}%):</span>
+                  <span>-{formatPrice(discount)}</span>
+                </div>
+              )}
+              
+              <div className="flex justify-between font-semibold border-t pt-1">
+                <span>Total:</span>
+                <span>{formatPrice(total)}</span>
+              </div>
             </div>
           </div>
 

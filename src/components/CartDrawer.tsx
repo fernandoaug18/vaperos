@@ -1,14 +1,29 @@
 import { useCart } from "@/hooks/useCart";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { ShoppingCart, Plus, Minus, Trash2, CreditCard, Building2 } from "lucide-react";
+import { ShoppingCart, Plus, Minus, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
 import { PaymentMethodSelector } from "./PaymentMethodSelector";
+import { CouponInput } from "./CouponInput";
 
 export const CartDrawer = () => {
-  const { items, updateQuantity, removeFromCart, getTotalItems, getTotalPrice, isOpen, setIsOpen } = useCart();
+  const { 
+    items, 
+    updateQuantity, 
+    removeFromCart, 
+    getTotalItems, 
+    getTotalPrice, 
+    getSubtotal,
+    getDiscountAmount,
+    applyCoupon,
+    removeCoupon,
+    appliedCoupon,
+    discountPercentage,
+    isOpen, 
+    setIsOpen 
+  } = useCart();
   const [showPayment, setShowPayment] = useState(false);
 
   const formatPrice = (price: number) => {
@@ -21,13 +36,17 @@ export const CartDrawer = () => {
 
   if (showPayment) {
     return (
-      <PaymentMethodSelector 
-        total={getTotalPrice()}
-        items={items}
-        onBack={() => setShowPayment(false)}
-        isOpen={isOpen}
-        onOpenChange={setIsOpen}
-      />
+        <PaymentMethodSelector 
+          total={getTotalPrice()}
+          subtotal={getSubtotal()}
+          discount={getDiscountAmount()}
+          appliedCoupon={appliedCoupon}
+          discountPercentage={discountPercentage}
+          items={items}
+          onBack={() => setShowPayment(false)}
+          isOpen={isOpen}
+          onOpenChange={setIsOpen}
+        />
     );
   }
 
@@ -108,9 +127,32 @@ export const CartDrawer = () => {
               </div>
 
               <div className="border-t pt-4 space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-lg font-semibold">Total:</span>
-                  <span className="text-xl font-bold">{formatPrice(getTotalPrice())}</span>
+                <CouponInput
+                  onApplyCoupon={applyCoupon}
+                  onRemoveCoupon={removeCoupon}
+                  appliedCoupon={appliedCoupon}
+                  discount={discountPercentage}
+                />
+                
+                <Separator />
+                
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm">Subtotal:</span>
+                    <span className="text-sm">{formatPrice(getSubtotal())}</span>
+                  </div>
+                  
+                  {appliedCoupon && (
+                    <div className="flex justify-between items-center text-green-600">
+                      <span className="text-sm">Descuento ({discountPercentage}%):</span>
+                      <span className="text-sm">-{formatPrice(getDiscountAmount())}</span>
+                    </div>
+                  )}
+                  
+                  <div className="flex justify-between items-center border-t pt-2">
+                    <span className="text-lg font-semibold">Total:</span>
+                    <span className="text-xl font-bold">{formatPrice(getTotalPrice())}</span>
+                  </div>
                 </div>
                 
                 <Button 
