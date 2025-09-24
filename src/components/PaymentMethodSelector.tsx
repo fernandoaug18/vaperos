@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { CartItem } from "@/hooks/useCart";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+
 
 interface PaymentMethodSelectorProps {
   total: number;
@@ -39,36 +39,57 @@ export const PaymentMethodSelector = ({
       console.log('Starting Mercado Pago payment with items:', items);
       console.log('Total price:', total);
       
-      const processedItems = items.map(item => ({
-        id: item.id,
-        name: item.name,
-        flavor: item.flavor,
-        color: item.color,
-        price: parseFloat(item.price.replace(/\./g, '')), // Handle Chilean format correctly
-        quantity: item.quantity
-      }));
+      // Crear preferencia de pago directamente con Mercado Pago
+      const preference = {
+        items: items.map(item => ({
+          id: item.id,
+          title: `${item.name} - ${item.flavor || ''}`,
+          unit_price: parseFloat(item.price.replace(/\./g, '')),
+          quantity: item.quantity,
+          currency_id: 'CLP'
+        })),
+        payer: {
+          email: 'test_user@test.com' // Email por defecto
+        },
+        back_urls: {
+          success: `${window.location.origin}/payment-success`,
+          failure: `${window.location.origin}/payment-cancelled`,
+          pending: `${window.location.origin}/payment-cancelled`
+        },
+        auto_return: 'approved',
+        payment_methods: {
+          excluded_payment_types: [],
+          excluded_payment_methods: [],
+          installments: 12
+        },
+        notification_url: `${window.location.origin}/webhooks/mercadopago`,
+        statement_descriptor: 'VAPEROS'
+      };
+
+      // IMPORTANTE: Reemplaza este token de prueba con tu Access Token real de Mercado Pago
+      // Puedes obtener tu token en: https://www.mercadopago.cl/developers/panel/app
+      // Para producción, mantén este token seguro como variable de entorno
+      const accessToken = 'TEST-2441634409951788-092414-c47bf38509948b7e86bb9c5da1c6a7a8-191897312'; // Token de prueba
       
-      console.log('Processed items for Mercado Pago:', processedItems);
-      
-      const { data, error } = await supabase.functions.invoke('create-mercado-pago-payment', {
-        body: { 
-          items: processedItems,
-          total: total
-        }
+      const response = await fetch('https://api.mercadopago.com/checkout/preferences', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        },
+        body: JSON.stringify(preference)
       });
 
-      console.log('Mercado Pago response:', data, error);
-
-      if (error) {
-        console.error('Mercado Pago error:', error);
-        throw error;
-      }
-
-      if (data?.init_point) {
-        console.log('Redirecting to Mercado Pago:', data.init_point);
+      const data = await response.json();
+      
+      if (data.init_point) {
         window.open(data.init_point, '_blank');
+        toast({
+          title: "Éxito",
+          description: "Redirigiendo a Mercado Pago...",
+        });
       } else {
-        throw new Error('No payment URL received from Mercado Pago');
+        throw new Error('No se pudo crear la preferencia de pago');
       }
     } catch (error) {
       console.error('Mercado Pago payment failed:', error);
