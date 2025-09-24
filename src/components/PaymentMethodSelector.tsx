@@ -56,9 +56,8 @@ export const PaymentMethodSelector = ({
     document.body.appendChild(script);
 
     script.onload = () => {
-      // IMPORTANTE: Reemplaza 'TEST-...' con tu Public Key de Mercado Pago
-      // Obtén tu Public Key desde: https://www.mercadopago.com/developers/panel/app
-      const mp = new window.MercadoPago('TEST-4762a890-625c-4df1-9ad8-5b10cb151ff6', {
+      // Configuración con tu Public Key de Mercado Pago
+      const mp = new window.MercadoPago('APP_USR-60214f51-20bd-4ef6-903e-c54b111f8df6', {
         locale: 'es-CL'
       });
     };
@@ -109,8 +108,8 @@ export const PaymentMethodSelector = ({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          // REEMPLAZA con tu Access Token de producción
-          'Authorization': 'Bearer APP_USR-tu-access-token-aqui'
+          // Access Token de producción
+          'Authorization': 'Bearer APP_USR-4714345607038986-091113-e77f3d9fc9c788e194677adc073ad4ba-2686457998'
         },
         body: JSON.stringify(preference)
       });
