@@ -215,9 +215,6 @@ export const PaymentMethodSelector = ({
                     </div>
                     <div className="text-left">
                       <div className="font-medium">Pagar con Mercado Pago</div>
-                      <div className="text-sm text-muted-foreground">
-                        Tarjetas, transferencias y más
-                      </div>
                     </div>
                   </div>
                 </Button>
