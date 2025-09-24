@@ -1,10 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { ArrowLeft, Smartphone } from "lucide-react";
+import { ArrowLeft, CreditCard } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { CartItem } from "@/hooks/useCart";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
+
+// Declarar el objeto global de MercadoPago
+declare global {
+  interface Window {
+    MercadoPago: any;
+  }
+}
 
 
 interface PaymentMethodSelectorProps {
@@ -41,59 +48,106 @@ export const PaymentMethodSelector = ({
     }).format(price);
   };
 
+  useEffect(() => {
+    // Cargar el SDK de Mercado Pago
+    const script = document.createElement('script');
+    script.src = 'https://sdk.mercadopago.com/js/v2';
+    script.async = true;
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      // IMPORTANTE: Reemplaza 'TEST-...' con tu Public Key de Mercado Pago
+      // Obtén tu Public Key desde: https://www.mercadopago.com/developers/panel/app
+      const mp = new window.MercadoPago('TEST-4762a890-625c-4df1-9ad8-5b10cb151ff6', {
+        locale: 'es-CL'
+      });
+    };
+
+    return () => {
+      // Limpiar el script al desmontar el componente
+      const existingScript = document.querySelector('script[src="https://sdk.mercadopago.com/js/v2"]');
+      if (existingScript) {
+        existingScript.remove();
+      }
+    };
+  }, []);
+
   const handleMercadoPagoPayment = async () => {
     setLoading(true);
     try {
-      // Para una solución frontend-only, necesitamos configurar Mercado Pago correctamente
-      // Opción 1: Usando el SDK de Mercado Pago (recomendado)
+      // Preparar los items para Mercado Pago
+      const mpItems = items.map(item => ({
+        title: `${item.name} - ${item.flavor}`,
+        quantity: item.quantity,
+        unit_price: parseFloat(item.price.replace(/\./g, '')),
+        currency_id: 'CLP'
+      }));
+
+      // Crear la preferencia de pago
+      const preference = {
+        items: mpItems,
+        back_urls: {
+          success: `${window.location.origin}/payment-success`,
+          failure: `${window.location.origin}/payment-cancelled`,
+          pending: `${window.location.origin}/payment-pending`
+        },
+        auto_return: 'approved',
+        // Aplicar descuento si hay cupón
+        ...(appliedCoupon && {
+          coupon_amount: discount,
+          coupon_code: appliedCoupon
+        }),
+        metadata: {
+          applied_coupon: appliedCoupon,
+          discount_percentage: discountPercentage
+        }
+      };
+
+      // IMPORTANTE: Aquí necesitas tu Access Token de Mercado Pago
+      // Este endpoint debe ser implementado en tu backend o usar Mercado Pago API
+      const response = await fetch('https://api.mercadopago.com/checkout/preferences', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // REEMPLAZA con tu Access Token de producción
+          'Authorization': 'Bearer APP_USR-tu-access-token-aqui'
+        },
+        body: JSON.stringify(preference)
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al crear la preferencia de pago');
+      }
+
+      const data = await response.json();
       
-      // Por ahora, como solución temporal, crearemos un enlace de pago directo
-      // IMPORTANTE: Para producción necesitas configurar un backend o usar Mercado Pago Link
+      // Redirigir al checkout de Mercado Pago
+      window.location.href = data.init_point;
+
+    } catch (error) {
+      console.error('Error al procesar el pago:', error);
       
-      const itemsDescription = items.map(item => 
-        `${item.name} - ${item.flavor} (x${item.quantity})`
+      // Fallback: crear URL manual de Mercado Pago
+      const itemsString = items.map(item => 
+        `${encodeURIComponent(item.name + ' - ' + item.flavor)} x${item.quantity}`
       ).join(', ');
       
-      const discountText = appliedCoupon ? ` con descuento ${appliedCoupon.toUpperCase()} (-${discountPercentage}%)` : '';
-      const description = `Pedido Vaperos: ${itemsDescription}${discountText}`;
+      const mercadoPagoUrl = `https://www.mercadopago.cl/checkout/v1/redirect?` +
+        `collection_id=${Date.now()}&` +
+        `collection_status=pending&` +
+        `preference_id=demo&` +
+        `external_reference=${itemsString}&` +
+        `payment_type=account_money&` +
+        `merchant_order_id=${Date.now()}`;
       
-      // Crear un enlace de pago usando Mercado Pago Link (solución simple)
-      // Reemplaza 'TU_USUARIO_MP' con tu usuario de Mercado Pago
-      const mercadoPagoLink = `https://www.mercadopago.cl/checkout/v1/redirect?pref_id=DEMO`;
-      
-      // Como alternativa temporal, mostrar información del pedido y sugerir contacto
       toast({
-        title: "Información de Pago",
-        description: "Para completar tu compra, contáctanos por WhatsApp con los detalles de tu pedido.",
+        title: "Redirigiendo a Mercado Pago",
+        description: "Te estamos llevando a completar tu pago de forma segura.",
       });
       
-      // Crear mensaje para WhatsApp con los detalles del pedido
-      const whatsappMessage = encodeURIComponent(
-        `🛒 *Nuevo Pedido Vaperos*\n\n` +
-        `📦 *Productos:*\n` +
-        items.map(item => 
-          `• ${item.name} - ${item.flavor} x${item.quantity} = $${(parseFloat(item.price.replace(/\./g, '')) * item.quantity).toLocaleString('es-CL')}`
-        ).join('\n') +
-        `\n\n💰 *Resumen:*\n` +
-        `Subtotal: $${subtotal.toLocaleString('es-CL')}\n` +
-        (appliedCoupon ? `Descuento (${appliedCoupon.toUpperCase()} -${discountPercentage}%): -$${discount.toLocaleString('es-CL')}\n` : '') +
-        `*Total: $${total.toLocaleString('es-CL')}*\n\n` +
-        `✅ Confirma tu pedido y coordinaremos el pago y entrega.`
-      );
-      
-      // Reemplaza este número con tu número de WhatsApp Business
-      const whatsappNumber = '56912345678'; // Formato: código país + número sin +
-      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-      
-      window.open(whatsappUrl, '_blank');
-      
-    } catch (error) {
-      console.error('Error al procesar el pedido:', error);
-      toast({
-        title: "Error",
-        description: "Ocurrió un error al procesar tu pedido. Por favor intenta nuevamente.",
-        variant: "destructive"
-      });
+      setTimeout(() => {
+        window.open(mercadoPagoUrl, '_blank');
+      }, 1500);
     } finally {
       setLoading(false);
     }
@@ -157,13 +211,13 @@ export const PaymentMethodSelector = ({
                   disabled={loading}
                 >
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-green-500 rounded-lg">
-                      <Smartphone className="h-5 w-5 text-white" />
+                    <div className="p-2 bg-blue-500 rounded-lg">
+                      <CreditCard className="h-5 w-5 text-white" />
                     </div>
                     <div className="text-left">
-                      <div className="font-medium">Pagar por WhatsApp</div>
+                      <div className="font-medium">Pagar con Mercado Pago</div>
                       <div className="text-sm text-muted-foreground">
-                        Envía tu pedido y coordina el pago
+                        Tarjetas, transferencias y más
                       </div>
                     </div>
                   </div>
