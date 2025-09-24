@@ -74,14 +74,13 @@ export const PaymentMethodSelector = ({
   const handleMercadoPagoPayment = async () => {
     setLoading(true);
     try {
-      // Preparar los items para Mercado Pago
-      const mpItems = items.map(item => ({
-        title: `${item.name} - ${item.flavor}`,
-        quantity: item.quantity,
-        unit_price: parseFloat(item.price.replace(/\./g, '')),
-        currency_id: 'CLP'
-      }));
-
+      console.log('🔵 Iniciando pago Mercado Pago');
+      console.log('💰 Total a pagar:', total);
+      console.log('🎫 Cupón aplicado:', appliedCoupon);
+      console.log('📊 Descuento %:', discountPercentage);
+      console.log('💸 Monto descuento:', discount);
+      console.log('🧮 Subtotal original:', subtotal);
+      
       // Crear la preferencia de pago con el precio con descuento aplicado
       const preference = {
         items: [
@@ -109,6 +108,8 @@ export const PaymentMethodSelector = ({
         }
       };
 
+      console.log('📋 Preferencia Mercado Pago:', JSON.stringify(preference, null, 2));
+
       // Crear preferencia usando el Access Token
       const response = await fetch('https://api.mercadopago.com/checkout/preferences', {
         method: 'POST',
@@ -121,11 +122,12 @@ export const PaymentMethodSelector = ({
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error('Error de Mercado Pago:', errorData);
+        console.error('❌ Error de Mercado Pago:', errorData);
         throw new Error('Error al crear la preferencia de pago');
       }
 
       const data = await response.json();
+      console.log('✅ Respuesta Mercado Pago:', data);
       
       toast({
         title: "Redirigiendo a Mercado Pago",
@@ -134,11 +136,12 @@ export const PaymentMethodSelector = ({
       
       // Redirigir al checkout de Mercado Pago con un pequeño delay
       setTimeout(() => {
+        console.log('🚀 Redirigiendo a:', data.init_point);
         window.location.href = data.init_point;
       }, 1500);
       
     } catch (error) {
-      console.error('Error al procesar el pago:', error);
+      console.error('❌ Error al procesar el pago:', error);
       toast({
         title: "Error",
         description: "Ocurrió un error al procesar tu pedido. Por favor intenta nuevamente.",
