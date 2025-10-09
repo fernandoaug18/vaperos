@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { CartItem } from "@/hooks/useCart";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { CustomerData } from "./CheckoutForm";
 
 // Declarar el objeto global de MercadoPago
 declare global {
@@ -21,6 +22,7 @@ interface PaymentMethodSelectorProps {
   appliedCoupon: string | null;
   discountPercentage: number;
   items: CartItem[];
+  customerData: CustomerData | null;
   onBack: () => void;
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
@@ -32,7 +34,8 @@ export const PaymentMethodSelector = ({
   discount,
   appliedCoupon,
   discountPercentage,
-  items, 
+  items,
+  customerData,
   onBack, 
   isOpen, 
   onOpenChange 
@@ -72,14 +75,44 @@ export const PaymentMethodSelector = ({
   }, []);
 
   const handleMercadoPagoPayment = async () => {
+    if (!customerData) {
+      toast({
+        title: "Error",
+        description: "Faltan datos del cliente",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setLoading(true);
     try {
       console.log('🔵 Iniciando pago Mercado Pago');
+      console.log('👤 Datos del cliente:', customerData);
       console.log('💰 Total a pagar:', total);
       console.log('🎫 Cupón aplicado:', appliedCoupon);
-      console.log('📊 Descuento %:', discountPercentage);
-      console.log('💸 Monto descuento:', discount);
-      console.log('🧮 Subtotal original:', subtotal);
+      
+      // Enviar email de confirmación
+      try {
+        await fetch(`${window.location.origin}/api/send-order-confirmation`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            customerEmail: customerData.email,
+            customerData,
+            items,
+            total,
+            subtotal,
+            discount,
+            appliedCoupon,
+            discountPercentage
+          })
+        });
+      } catch (emailError) {
+        console.error('Error al enviar email:', emailError);
+        // Continuar con el pago aunque falle el email
+      }
       
       // Crear la preferencia de pago con el precio con descuento aplicado
       const preference = {
@@ -87,11 +120,26 @@ export const PaymentMethodSelector = ({
           {
             title: 'Pedido Vaperos',
             quantity: 1,
-            unit_price: total, // Este ya viene con el descuento aplicado
+            unit_price: total,
             currency_id: 'CLP',
             description: `Pedido de ${items.length} producto(s)${appliedCoupon ? ` con descuento ${appliedCoupon.toUpperCase()} (-${discountPercentage}%)` : ''}`
           }
         ],
+        payer: {
+          name: customerData.firstName,
+          surname: customerData.lastName,
+          email: customerData.email,
+          identification: {
+            type: 'RUT',
+            number: customerData.rut
+          },
+          address: {
+            street_name: customerData.address,
+            city: customerData.city,
+            state_name: customerData.region,
+            zip_code: customerData.postalCode
+          }
+        },
         back_urls: {
           success: `${window.location.origin}/payment-success`,
           failure: `${window.location.origin}/payment-cancelled`,
@@ -100,6 +148,12 @@ export const PaymentMethodSelector = ({
         auto_return: 'approved',
         external_reference: `pedido-${Date.now()}`,
         metadata: {
+          customer_email: customerData.email,
+          customer_name: `${customerData.firstName} ${customerData.lastName}`,
+          customer_rut: customerData.rut,
+          customer_address: customerData.address,
+          customer_city: customerData.city,
+          customer_region: customerData.region,
           applied_coupon: appliedCoupon,
           discount_percentage: discountPercentage,
           original_subtotal: subtotal,

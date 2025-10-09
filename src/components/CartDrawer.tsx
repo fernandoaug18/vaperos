@@ -7,6 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
 import { PaymentMethodSelector } from "./PaymentMethodSelector";
 import { CouponInput } from "./CouponInput";
+import { CheckoutForm, CustomerData } from "./CheckoutForm";
 
 export const CartDrawer = () => {
   const { 
@@ -24,7 +25,9 @@ export const CartDrawer = () => {
     isOpen, 
     setIsOpen 
   } = useCart();
+  const [showCheckout, setShowCheckout] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
+  const [customerData, setCustomerData] = useState<CustomerData | null>(null);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-CL', {
@@ -34,19 +37,40 @@ export const CartDrawer = () => {
     }).format(price);
   };
 
+  const handleCheckoutSubmit = (data: CustomerData) => {
+    setCustomerData(data);
+    setShowCheckout(false);
+    setShowPayment(true);
+  };
+
+  if (showCheckout) {
+    return (
+      <CheckoutForm
+        onBack={() => setShowCheckout(false)}
+        onSubmit={handleCheckoutSubmit}
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+      />
+    );
+  }
+
   if (showPayment) {
     return (
-        <PaymentMethodSelector 
-          total={getTotalPrice()}
-          subtotal={getSubtotal()}
-          discount={getDiscountAmount()}
-          appliedCoupon={appliedCoupon}
-          discountPercentage={discountPercentage}
-          items={items}
-          onBack={() => setShowPayment(false)}
-          isOpen={isOpen}
-          onOpenChange={setIsOpen}
-        />
+      <PaymentMethodSelector 
+        total={getTotalPrice()}
+        subtotal={getSubtotal()}
+        discount={getDiscountAmount()}
+        appliedCoupon={appliedCoupon}
+        discountPercentage={discountPercentage}
+        items={items}
+        customerData={customerData}
+        onBack={() => {
+          setShowPayment(false);
+          setShowCheckout(true);
+        }}
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+      />
     );
   }
 
@@ -158,7 +182,7 @@ export const CartDrawer = () => {
                 <Button 
                   className="w-full" 
                   size="lg"
-                  onClick={() => setShowPayment(true)}
+                  onClick={() => setShowCheckout(true)}
                 >
                   Proceder al Pago
                 </Button>
