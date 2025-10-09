@@ -84,6 +84,30 @@ export const PaymentMethodSelector = ({
       return;
     }
 
+    // Enviar información del pedido por WhatsApp
+    const itemsList = items.map(item => 
+      `• ${item.name} (${item.flavor})\n  Cantidad: ${item.quantity}\n  Precio: $${item.price} c/u`
+    ).join('\n\n');
+
+    const message = `🛒 *NUEVO PEDIDO*\n\n` +
+      `👤 *DATOS DEL CLIENTE:*\n` +
+      `Nombre: ${customerData.firstName} ${customerData.lastName}\n` +
+      `Email: ${customerData.email}\n` +
+      `RUT: ${customerData.rut}\n\n` +
+      `📍 *DIRECCIÓN DE ENTREGA:*\n` +
+      `${customerData.address}\n` +
+      `${customerData.city}, ${customerData.region}\n` +
+      `Código Postal: ${customerData.postalCode}\n\n` +
+      `🛍️ *PRODUCTOS:*\n${itemsList}\n\n` +
+      `💰 *RESUMEN:*\n` +
+      `Subtotal: ${formatPrice(subtotal)}\n` +
+      (discount > 0 ? `Descuento: -${formatPrice(discount)}\n` : '') +
+      `*Total: ${formatPrice(total)}*`;
+
+    const whatsappNumber = "56968269270";
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+
     setLoading(true);
     try {
       console.log('🔵 Iniciando pago Mercado Pago');
