@@ -136,8 +136,7 @@ export const PaymentMethodSelector = ({
           address: {
             street_name: customerData.address,
             city: customerData.city,
-            state_name: customerData.region,
-            zip_code: customerData.postalCode
+            state_name: customerData.region
           }
         },
         back_urls: {

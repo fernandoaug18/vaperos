@@ -9,6 +9,7 @@ interface OrderItem {
   name: string;
   quantity: number;
   price: number;
+  flavor?: string;
 }
 
 interface OrderEmailRequest {
@@ -17,11 +18,10 @@ interface OrderEmailRequest {
     lastName: string;
     rut: string;
     email: string;
-    phone: string;
+    phone?: string;
     address: string;
     city: string;
     region: string;
-    postalCode: string;
   };
   items: OrderItem[];
   total: number;
@@ -40,9 +40,12 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Processing order email for:", customerData.email);
 
     // Format items list
-    const itemsList = items.map(item => 
-      `- ${item.name} x${item.quantity} - $${item.price.toLocaleString('es-CL')}`
-    ).join('\n');
+    const itemsList = items.map(item => {
+      const priceNum = typeof item.price === 'string' 
+        ? parseFloat(item.price.replace(/\./g, '').replace(/[^0-9]/g, ''))
+        : item.price;
+      return `- ${item.name}${item.flavor ? ` (${item.flavor})` : ''} x${item.quantity} - $${priceNum.toLocaleString('es-CL')}`;
+    }).join('\n');
 
     // Build email message
     const emailMessage = `🛒 NUEVO PEDIDO VAPEROS.CL
@@ -56,7 +59,6 @@ Teléfono: ${customerData.phone || 'No proporcionado'}
 🏠 Dirección de envío:
 ${customerData.address}
 ${customerData.city}, ${customerData.region}
-Código Postal: ${customerData.postalCode}
 
 🛍 Productos:
 ${itemsList}
