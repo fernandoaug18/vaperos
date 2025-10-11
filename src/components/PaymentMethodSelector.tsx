@@ -6,6 +6,7 @@ import { CartItem } from "@/hooks/useCart";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { CustomerData } from "./CheckoutForm";
+import { supabase } from "@/integrations/supabase/client";
 
 // Declarar el objeto global de MercadoPago
 declare global {
@@ -84,30 +85,6 @@ export const PaymentMethodSelector = ({
       return;
     }
 
-    // Enviar información del pedido por WhatsApp
-    const itemsList = items.map(item => 
-      `• ${item.name} (${item.flavor})\n  Cantidad: ${item.quantity}\n  Precio: $${item.price} c/u`
-    ).join('\n\n');
-
-    const message = `🛒 *NUEVO PEDIDO*\n\n` +
-      `👤 *DATOS DEL CLIENTE:*\n` +
-      `Nombre: ${customerData.firstName} ${customerData.lastName}\n` +
-      `Email: ${customerData.email}\n` +
-      `RUT: ${customerData.rut}\n\n` +
-      `📍 *DIRECCIÓN DE ENTREGA:*\n` +
-      `${customerData.address}\n` +
-      `${customerData.city}, ${customerData.region}\n` +
-      `Código Postal: ${customerData.postalCode}\n\n` +
-      `🛍️ *PRODUCTOS:*\n${itemsList}\n\n` +
-      `💰 *RESUMEN:*\n` +
-      `Subtotal: ${formatPrice(subtotal)}\n` +
-      (discount > 0 ? `Descuento: -${formatPrice(discount)}\n` : '') +
-      `*Total: ${formatPrice(total)}*`;
-
-    const whatsappNumber = "56961446138";
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-
     setLoading(true);
     try {
       console.log('🔵 Iniciando pago Mercado Pago');
@@ -115,24 +92,23 @@ export const PaymentMethodSelector = ({
       console.log('💰 Total a pagar:', total);
       console.log('🎫 Cupón aplicado:', appliedCoupon);
       
-      // Enviar email de confirmación
+      // Enviar email con los detalles del pedido
       try {
-        await fetch(`${window.location.origin}/api/send-order-confirmation`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            customerEmail: customerData.email,
+        const emailResponse = await supabase.functions.invoke('send-order-email', {
+          body: {
             customerData,
             items,
             total,
             subtotal,
-            discount,
-            appliedCoupon,
-            discountPercentage
-          })
+            discount: discount > 0 ? discount : undefined
+          }
         });
+        
+        if (emailResponse.error) {
+          console.error('Error al enviar email de pedido:', emailResponse.error);
+        } else {
+          console.log('✅ Email de pedido enviado correctamente');
+        }
       } catch (emailError) {
         console.error('Error al enviar email:', emailError);
         // Continuar con el pago aunque falle el email
