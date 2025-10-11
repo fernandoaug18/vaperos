@@ -6,7 +6,7 @@ import { CartItem } from "@/hooks/useCart";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { CustomerData } from "./CheckoutForm";
-import { supabase } from "@/integrations/supabase/client";
+
 
 // Declarar el objeto global de MercadoPago
 declare global {
@@ -92,25 +92,30 @@ export const PaymentMethodSelector = ({
       console.log('💰 Total a pagar:', total);
       console.log('🎫 Cupón aplicado:', appliedCoupon);
       
-      // Enviar email con los detalles del pedido
+      // Enviar email con los detalles del pedido directamente vía Web3Forms
       try {
-        const emailResponse = await supabase.functions.invoke('send-order-email', {
-          body: {
-            customerData,
-            items,
-            total,
-            subtotal,
-            discount: discount > 0 ? discount : undefined
-          }
-        });
-        
-        if (emailResponse.error) {
-          console.error('Error al enviar email de pedido:', emailResponse.error);
-        } else {
-          console.log('✅ Email de pedido enviado correctamente');
-        }
+        const itemsList = items.map((item) => {
+          const priceNum = typeof item.price === 'string'
+            ? parseFloat(item.price.replace(/\./g, '').replace(/[^0-9]/g, ''))
+            : (item.price as number);
+          return `- ${item.name}${item.flavor ? ` (${item.flavor})` : ''} x${item.quantity} - $${priceNum.toLocaleString('es-CL')}`;
+        }).join('\n');
+
+        const message = `🛒 NUEVO PEDIDO VAPEROS.CL\n\n📦 Datos del cliente:\nNombre: ${customerData.firstName} ${customerData.lastName}\nRUT: ${customerData.rut}\nEmail: ${customerData.email}\nTeléfono: ${customerData.phone || 'No proporcionado'}\n\n🏠 Dirección de envío:\n${customerData.address}\n${customerData.city}, ${customerData.region}\n\n🛍 Productos:\n${itemsList}\n\n💰 Subtotal: ${formatPrice(subtotal)}\n${discount > 0 ? `🎫 Descuento: -${formatPrice(discount)}` : ''}\n💰 Total: ${formatPrice(total)}`;
+
+        const formData = new FormData();
+        formData.append('access_key', 'cf71c127-c06e-435a-a775-7a5441a0e616');
+        formData.append('subject', '🛒 Nuevo Pedido - Vaperos.cl');
+        formData.append('from_name', 'Vaperos.cl');
+        formData.append('from_email', 'no-reply@vaperos.cl');
+        formData.append('replyto', customerData.email);
+        formData.append('email', 'hqdscl@gmail.com');
+        formData.append('message', message);
+
+        await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData });
+        console.log('✅ Email de pedido enviado correctamente (Web3Forms)');
       } catch (emailError) {
-        console.error('Error al enviar email:', emailError);
+        console.error('Error al enviar email (Web3Forms):', emailError);
         // Continuar con el pago aunque falle el email
       }
       
