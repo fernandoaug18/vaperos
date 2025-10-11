@@ -49,6 +49,13 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* Shipping Promo */}
+        <div className="mb-6 text-center">
+          <p className="text-primary font-semibold text-lg">
+            🚚 Envío gratis a toda región Metropolitana de Chile por tiempo limitado
+          </p>
+        </div>
+
         {/* Bottom */}
         <div className="border-t border-border/50 pt-8 text-center text-muted-foreground">
           <p>&copy; 2024 <span className="text-white">Vaperos</span>. Todos los derechos reservados.</p>

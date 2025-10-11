@@ -104,7 +104,7 @@ export const PaymentMethodSelector = ({
       (discount > 0 ? `Descuento: -${formatPrice(discount)}\n` : '') +
       `*Total: ${formatPrice(total)}*`;
 
-    const whatsappNumber = "56968269270";
+    const whatsappNumber = "56961446138";
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
 
