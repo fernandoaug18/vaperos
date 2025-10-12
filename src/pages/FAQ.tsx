@@ -21,15 +21,15 @@ const FAQ = () => {
     },
     {
       question: "¿Cuánto de nicotina tiene un HQD?",
-      answer: "Aquí ofrecemos HQD Vaper con una concentración de nicotina del 5% (50mg/ml)."
+      answer: "Aquí ofrecemos HQD Vaper con una concentración de nicotina del 4,5% (45mg/ml)."
     },
     {
       question: "¿Cómo usar vape HQD?",
       answer: "Basta con retirar el envase, introducir la boquilla en la boca e inhalar para activarlo."
     },
     {
-      question: "¿Cuánto es 5% de nicotina?",
-      answer: "Perfecto para los fumadores habituales, el 5% de nicotina le ofrece una experiencia diaria de fumar con nicotina."
+      question: "¿Cuánto es 4,5% de nicotina?",
+      answer: "Perfecto para los fumadores habituales, el 4,5% de nicotina le ofrece una experiencia diaria de fumar con nicotina."
     }
   ];
 
