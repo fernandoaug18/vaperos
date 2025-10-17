@@ -25,19 +25,30 @@ interface CartContextType {
   getTotalPrice: () => number;
   getSubtotal: () => number;
   getDiscountAmount: () => number;
+  getShippingCost: () => number;
   applyCoupon: (coupon: string) => boolean;
   removeCoupon: () => void;
   appliedCoupon: string | null;
   discountPercentage: number;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
+  selectedRegion: string | null;
+  setSelectedRegion: (region: string) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 // Valid coupons configuration
-const VALID_COUPONS = {
-  'vaperos20': 20 // 20% discount
+const VALID_COUPONS: { [key: string]: { type: 'percentage' | 'free_shipping_rm' | 'free_shipping_all', value: number } } = {
+  'vaperos20': { type: 'percentage', value: 20 }, // 20% discount
+  'vaperosrm': { type: 'free_shipping_rm', value: 0 }, // Free shipping for RM
+  'vaperoschile': { type: 'free_shipping_all', value: 0 } // Free shipping for all regions
+};
+
+// Shipping costs
+const SHIPPING_COSTS = {
+  'Región Metropolitana de Santiago': 3100,
+  default: 4200
 };
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
@@ -45,6 +56,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
   const [discountPercentage, setDiscountPercentage] = useState(0);
+  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
+  const [couponType, setCouponType] = useState<'percentage' | 'free_shipping_rm' | 'free_shipping_all' | null>(null);
 
   const addToCart = (product: Product) => {
     console.log('Adding product to cart:', product);
@@ -87,6 +100,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setItems([]);
     setAppliedCoupon(null);
     setDiscountPercentage(0);
+    setSelectedRegion(null);
+    setCouponType(null);
   };
 
   const getTotalItems = () => {
@@ -106,17 +121,37 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     return subtotal * (discountPercentage / 100);
   };
 
+  const getShippingCost = () => {
+    if (!selectedRegion) return 0;
+    
+    // Check if coupon provides free shipping
+    if (couponType === 'free_shipping_all') {
+      return 0;
+    }
+    
+    if (couponType === 'free_shipping_rm' && selectedRegion === 'Región Metropolitana de Santiago') {
+      return 0;
+    }
+    
+    // Apply regular shipping costs
+    return selectedRegion === 'Región Metropolitana de Santiago' 
+      ? SHIPPING_COSTS['Región Metropolitana de Santiago']
+      : SHIPPING_COSTS.default;
+  };
+
   const getTotalPrice = () => {
     const subtotal = getSubtotal();
     const discount = getDiscountAmount();
-    return subtotal - discount;
+    const shipping = getShippingCost();
+    return subtotal - discount + shipping;
   };
 
   const applyCoupon = (coupon: string): boolean => {
-    const discount = VALID_COUPONS[coupon.toLowerCase()];
-    if (discount) {
+    const couponData = VALID_COUPONS[coupon.toLowerCase()];
+    if (couponData) {
       setAppliedCoupon(coupon.toLowerCase());
-      setDiscountPercentage(discount);
+      setCouponType(couponData.type);
+      setDiscountPercentage(couponData.value);
       return true;
     }
     return false;
@@ -125,6 +160,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const removeCoupon = () => {
     setAppliedCoupon(null);
     setDiscountPercentage(0);
+    setCouponType(null);
   };
 
   return (
@@ -138,12 +174,15 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       getTotalPrice,
       getSubtotal,
       getDiscountAmount,
+      getShippingCost,
       applyCoupon,
       removeCoupon,
       appliedCoupon,
       discountPercentage,
       isOpen,
-      setIsOpen
+      setIsOpen,
+      selectedRegion,
+      setSelectedRegion
     }}>
       {children}
     </CartContext.Provider>

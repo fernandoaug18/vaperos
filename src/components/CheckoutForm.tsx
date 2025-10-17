@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
+import { useCart } from "@/hooks/useCart";
 
 // Validación de RUT chileno
 const validateRUT = (rut: string): boolean => {
@@ -87,6 +88,7 @@ const customerSchema = z.object({
 
 export const CheckoutForm = ({ onBack, onSubmit, isOpen, onOpenChange }: CheckoutFormProps) => {
   const { toast } = useToast();
+  const { setSelectedRegion } = useCart();
   const [formData, setFormData] = useState<CustomerData>({
     email: "",
     rut: "",
@@ -102,6 +104,10 @@ export const CheckoutForm = ({ onBack, onSubmit, isOpen, onOpenChange }: Checkou
 
   const handleChange = (field: keyof CustomerData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    // Update selected region in cart context
+    if (field === 'region') {
+      setSelectedRegion(value);
+    }
     // Limpiar error del campo cuando el usuario empieza a escribir
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: undefined }));

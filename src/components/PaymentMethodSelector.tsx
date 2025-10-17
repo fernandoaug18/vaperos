@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { ArrowLeft, CreditCard } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { CartItem } from "@/hooks/useCart";
+import { CartItem, useCart } from "@/hooks/useCart";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { CustomerData } from "./CheckoutForm";
@@ -43,6 +43,7 @@ export const PaymentMethodSelector = ({
 }: PaymentMethodSelectorProps) => {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const { getShippingCost, selectedRegion } = useCart();
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-CL', {
@@ -101,7 +102,7 @@ export const PaymentMethodSelector = ({
           return `- ${item.name}${item.flavor ? ` (${item.flavor})` : ''} x${item.quantity} - $${priceNum.toLocaleString('es-CL')}`;
         }).join('\n');
 
-        const message = `🛒 NUEVO PEDIDO VAPEROS.CL\n\n📦 Datos del cliente:\nNombre: ${customerData.firstName} ${customerData.lastName}\nRUT: ${customerData.rut}\nEmail: ${customerData.email}\nTeléfono: ${customerData.phone || 'No proporcionado'}\n\n🏠 Dirección de envío:\n${customerData.address}\n${customerData.city}, ${customerData.region}\n\n🛍 Productos:\n${itemsList}\n\n💰 Subtotal: ${formatPrice(subtotal)}\n${discount > 0 ? `🎫 Descuento: -${formatPrice(discount)}` : ''}\n💰 Total: ${formatPrice(total)}`;
+        const message = `🛒 NUEVO PEDIDO VAPEROS.CL\n\n📦 Datos del cliente:\nNombre: ${customerData.firstName} ${customerData.lastName}\nRUT: ${customerData.rut}\nEmail: ${customerData.email}\nTeléfono: ${customerData.phone || 'No proporcionado'}\n\n🏠 Dirección de envío:\n${customerData.address}\n${customerData.city}, ${customerData.region}\n\n🛍 Productos:\n${itemsList}\n\n💰 Subtotal: ${formatPrice(subtotal)}\n${discount > 0 ? `🎫 Descuento: -${formatPrice(discount)}` : ''}\n🚚 Envío: ${getShippingCost() === 0 ? 'Gratis' : formatPrice(getShippingCost())}\n💰 Total: ${formatPrice(total)}`;
 
         const formData = new FormData();
         formData.append('access_key', 'cf71c127-c06e-435a-a775-7a5441a0e616');
@@ -242,10 +243,17 @@ export const PaymentMethodSelector = ({
                 <span>{formatPrice(subtotal)}</span>
               </div>
               
-              {appliedCoupon && (
+              {appliedCoupon && discountPercentage > 0 && (
                 <div className="flex justify-between text-sm text-green-600">
                   <span>Descuento ({discountPercentage}%):</span>
                   <span>-{formatPrice(discount)}</span>
+                </div>
+              )}
+              
+              {selectedRegion && (
+                <div className="flex justify-between text-sm">
+                  <span>Envío ({selectedRegion === 'Región Metropolitana de Santiago' ? 'RM' : 'Otras regiones'}):</span>
+                  <span>{getShippingCost() === 0 ? 'Gratis' : formatPrice(getShippingCost())}</span>
                 </div>
               )}
               

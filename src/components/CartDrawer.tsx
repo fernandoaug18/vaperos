@@ -18,12 +18,14 @@ export const CartDrawer = () => {
     getTotalPrice, 
     getSubtotal,
     getDiscountAmount,
+    getShippingCost,
     applyCoupon,
     removeCoupon,
     appliedCoupon,
     discountPercentage,
     isOpen, 
-    setIsOpen 
+    setIsOpen,
+    selectedRegion 
   } = useCart();
   const [showCheckout, setShowCheckout] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
@@ -166,10 +168,17 @@ export const CartDrawer = () => {
                     <span className="text-sm">{formatPrice(getSubtotal())}</span>
                   </div>
                   
-                  {appliedCoupon && (
+                  {appliedCoupon && discountPercentage > 0 && (
                     <div className="flex justify-between items-center text-green-600">
                       <span className="text-sm">Descuento ({discountPercentage}%):</span>
                       <span className="text-sm">-{formatPrice(getDiscountAmount())}</span>
+                    </div>
+                  )}
+                  
+                  {selectedRegion && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm">Envío ({selectedRegion === 'Región Metropolitana de Santiago' ? 'RM' : 'Otras regiones'}):</span>
+                      <span className="text-sm">{getShippingCost() === 0 ? 'Gratis' : formatPrice(getShippingCost())}</span>
                     </div>
                   )}
                   
