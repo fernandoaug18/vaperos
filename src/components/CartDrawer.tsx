@@ -23,6 +23,7 @@ export const CartDrawer = () => {
     removeCoupon,
     appliedCoupon,
     discountPercentage,
+    couponType,
     isOpen, 
     setIsOpen,
     selectedRegion 
@@ -158,6 +159,7 @@ export const CartDrawer = () => {
             onRemoveCoupon={removeCoupon}
             appliedCoupon={appliedCoupon}
             discountPercentage={discountPercentage}
+            couponType={couponType}
           />
                 
                 <Separator />

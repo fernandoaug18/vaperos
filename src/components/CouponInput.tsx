@@ -17,17 +17,26 @@ interface CouponInputProps {
   onRemoveCoupon: () => void;
   appliedCoupon: string | null;
   discountPercentage: number;
+  couponType: 'percentage' | 'free_shipping_rm' | 'free_shipping_all' | null;
 }
 
 export const CouponInput = ({ 
   onApplyCoupon, 
   onRemoveCoupon, 
   appliedCoupon, 
-  discountPercentage 
+  discountPercentage,
+  couponType 
 }: CouponInputProps) => {
   const [couponCode, setCouponCode] = useState("");
   const [isApplying, setIsApplying] = useState(false);
   const { toast } = useToast();
+
+  const getCouponMessage = () => {
+    if (couponType === 'percentage') return "Descuento de 20%";
+    if (couponType === 'free_shipping_rm') return "Entrega gratis RM";
+    if (couponType === 'free_shipping_all') return "Entrega gratis a Regiones";
+    return "";
+  };
 
   const handleApplyCoupon = () => {
     try {
@@ -39,7 +48,7 @@ export const CouponInput = ({
       if (success) {
         toast({
           title: "¡Cupón aplicado!",
-          description: `Descuento del 20% aplicado exitosamente`,
+          description: getCouponMessage(),
         });
         setCouponCode("");
       } else {
@@ -86,7 +95,7 @@ export const CouponInput = ({
               {appliedCoupon.toUpperCase()}
             </Badge>
             <span className="text-sm text-green-700">
-              -{discountPercentage}% de descuento
+              {getCouponMessage()}
             </span>
           </div>
         </div>

@@ -30,6 +30,7 @@ interface CartContextType {
   removeCoupon: () => void;
   appliedCoupon: string | null;
   discountPercentage: number;
+  couponType: 'percentage' | 'free_shipping_rm' | 'free_shipping_all' | null;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   selectedRegion: string | null;
@@ -179,6 +180,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       removeCoupon,
       appliedCoupon,
       discountPercentage,
+      couponType,
       isOpen,
       setIsOpen,
       selectedRegion,
