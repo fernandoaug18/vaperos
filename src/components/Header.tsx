@@ -1,7 +1,7 @@
 import { CartDrawer } from "@/components/CartDrawer";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Instagram, MessageCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import vaperosLogo from "@/assets/vaperos-new-logo.png";
 
@@ -47,6 +47,36 @@ const Header = () => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          
+          <Button 
+            variant="ghost" 
+            size="icon"
+            asChild
+          >
+            <a 
+              href="https://www.instagram.com/hqd.cl" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <Instagram className="h-5 w-5" />
+            </a>
+          </Button>
+          
+          <Button 
+            variant="ghost" 
+            size="icon"
+            asChild
+          >
+            <a 
+              href="https://wa.me/56961446138" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="WhatsApp"
+            >
+              <MessageCircle className="h-5 w-5" />
+            </a>
+          </Button>
         </div>
         
         <CartDrawer />
